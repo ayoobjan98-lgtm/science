@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فصل ۱۴ - مهره‌داران | علوم نهم</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0a1628;
+    --deep: #061020;
+    --teal: #00d4aa;
+    --gold: #f5a623;
+    --coral: #ff6b6b;
+    --sky: #4ecdc4;
+    --lime: #a8e063;
+    --purple: #9b59b6;
+    --amber: #f39c12;
+    --emerald: #27ae60;
+    --crimson: #e74c3c;
+    --ice: #74b9ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--deep);
+    color: #fff;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 20px; height: 20px;
+    border: 2px solid var(--teal);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.1s ease, background 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-dot {
+    position: fixed;
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10001;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--deep); }
+  ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 30% 50%, #0a2a4a 0%, var(--deep) 70%);
+  }
+
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bubbles {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,212,170,0.15), transparent);
+    border: 1px solid rgba(0,212,170,0.1);
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(110vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.4);
+    color: var(--teal);
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    animation: fadeSlideDown 0.8s ease both;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    animation: fadeSlideDown 0.8s 0.2s ease both;
+  }
+
+  .hero-title .highlight {
+    background: linear-gradient(135deg, var(--teal), var(--ice), var(--lime));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 3rem;
+    animation: fadeSlideDown 0.8s 0.4s ease both;
+  }
+
+  .hero-groups {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeSlideDown 0.8s 0.6s ease both;
+  }
+
+  .hero-group-chip {
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-group-chip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+
+  .hero-group-chip:hover::before { transform: translateX(0); }
+  .hero-group-chip:hover { transform: translateY(-4px) scale(1.05); }
+
+  .chip-fish { background: linear-gradient(135deg, #0369a1, #0ea5e9); box-shadow: 0 4px 20px rgba(14,165,233,0.4); }
+  .chip-amphibian { background: linear-gradient(135deg, #166534, #22c55e); box-shadow: 0 4px 20px rgba(34,197,94,0.4); }
+  .chip-reptile { background: linear-gradient(135deg, #713f12, #f59e0b); box-shadow: 0 4px 20px rgba(245,158,11,0.4); }
+  .chip-bird { background: linear-gradient(135deg, #581c87, #a855f7); box-shadow: 0 4px 20px rgba(168,85,247,0.4); }
+  .chip-mammal { background: linear-gradient(135deg, #7f1d1d, #ef4444); box-shadow: 0 4px 20px rgba(239,68,68,0.4); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    animation: bounce 2s infinite;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .scroll-hint .arrow {
+    display: block;
+    width: 30px; height: 30px;
+    border-right: 2px solid var(--teal);
+    border-bottom: 2px solid var(--teal);
+    transform: rotate(45deg);
+    margin: 0.5rem auto 0;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== INTRO SECTION ===== */
+  .intro-section {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-label {
+    color: var(--teal);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .section-label.visible { opacity: 1; transform: translateY(0); }
+
+  .intro-text {
+    font-size: 1.25rem;
+    line-height: 2;
+    color: rgba(255,255,255,0.75);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s 0.2s, transform 0.6s 0.2s;
+  }
+
+  .intro-text.visible { opacity: 1; transform: translateY(0); }
+
+  .intro-text strong { color: var(--teal); }
+
+  /* ===== ANIMAL SECTIONS ===== */
+  .animal-section {
+    position: relative;
+    padding: 5rem 2rem;
+    overflow: hidden;
+  }
+
+  .animal-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--section-color, var(--teal));
+    opacity: 0.3;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .section-header.visible { opacity: 1; transform: translateX(0); }
+
+  .section-icon {
+    width: 80px; height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
+  .section-title-wrap {}
+  .section-number { font-size: 0.75rem; color: rgba(255,255,255,0.4); letter-spacing: 3px; margin-bottom: 0.3rem; }
+  .section-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; line-height: 1; }
+
+  /* ===== CARDS GRID ===== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .info-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s, transform 0.6s, box-shadow 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+
+  .info-card.visible { opacity: 1; transform: translateY(0); }
+
+  .info-card:hover {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    border-color: var(--card-color, rgba(255,255,255,0.2));
+    transform: translateY(-6px) !important;
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-color, var(--teal));
+    border-radius: 20px 20px 0 0;
+  }
+
+  .info-card-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+  .info-card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--card-color, var(--teal)); }
+  .info-card-text { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.7); }
+
+  /* ===== BIG FEATURE CARD ===== */
+  .big-feature {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 24px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .big-feature.visible { opacity: 1; transform: translateY(0); }
+
+  .big-feature-bg {
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    opacity: 0.06;
+    background: var(--feature-color, var(--teal));
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  /* ===== FISH ANATOMY ===== */
+  .fish-diagram {
+    position: relative;
+    height: 200px;
+    margin: 2rem 0;
+    opacity: 0;
+    transition: opacity 0.8s 0.3s;
+  }
+
+  .fish-diagram.visible { opacity: 1; }
+
+  .fish-svg { width: 100%; height: 100%; }
+
+  /* ===== COMPARISON TABLE ===== */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .compare-table.visible { opacity: 1; transform: translateY(0); }
+
+  .compare-table th {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: var(--teal);
+    border-bottom: 2px solid rgba(0,212,170,0.3);
+  }
+
+  .compare-table td {
+    padding: 0.9rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .compare-table tr:hover td { background: rgba(255,255,255,0.04); }
+
+  /* ===== LIFE CYCLE ===== */
+  .lifecycle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+    position: relative;
+  }
+
+  .lifecycle-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .lifecycle-step.visible { opacity: 1; transform: scale(1); }
+
+  .lifecycle-bubble {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    position: relative;
+  }
+
+  .lifecycle-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    max-width: 80px;
+  }
+
+  .lifecycle-arrow {
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.3);
+    padding: 0 0.5rem;
+    align-self: center;
+    margin-top: -1.5rem;
+  }
+
+  /* ===== REPTILE GRID ===== */
+  .reptile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .reptile-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .reptile-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px) rotate(-2deg);
+    transition: opacity 0.5s, transform 0.5s;
+    cursor: pointer;
+  }
+
+  .reptile-card.visible { opacity: 1; transform: translateY(0) rotate(0); }
+  .reptile-card:hover { transform: translateY(-8px) scale(1.05) !important; border-color: rgba(245,158,11,0.4); }
+
+  .reptile-emoji { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .reptile-name { font-size: 0.9rem; font-weight: 700; color: var(--amber); }
+  .reptile-desc { font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-top: 0.3rem; line-height: 1.5; }
+
+  /* ===== FEATHER TYPES ===== */
+  .feather-showcase {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .feather-card {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(168,85,247,0.2);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s, transform 0.6s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feather-card.visible { opacity: 1; transform: translateY(0); }
+  .feather-card:hover { border-color: rgba(168,85,247,0.5); transform: translateY(-5px) !important; }
+
+  .feather-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #a855f7, transparent);
+  }
+
+  .feather-emoji { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .feather-name { font-size: 1rem; font-weight: 700; color: #a855f7; margin-bottom: 0.4rem; }
+  .feather-role { font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* ===== MAMMAL TYPES ===== */
+  .mammal-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .mammal-type-card {
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s, transform 0.6s;
+    cursor: pointer;
+  }
+
+  .mammal-type-card.visible { opacity: 1; transform: translateY(0); }
+  .mammal-type-card:hover { transform: translateY(-8px) scale(1.03) !important; }
+
+  .mammal-type-card-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background: var(--mammal-bg, var(--teal));
+    transition: opacity 0.3s;
+  }
+
+  .mammal-type-card:hover .mammal-type-card-bg { opacity: 0.15; }
+
+  .mammal-type-border {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    border: 1px solid var(--mammal-border, rgba(255,255,255,0.1));
+  }
+
+  .mammal-type-content { position: relative; z-index: 1; }
+  .mammal-big-emoji { font-size: 4rem; display: block; margin-bottom: 1rem; }
+  .mammal-type-name { font-size: 1.3rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--mammal-color, var(--teal)); }
+  .mammal-type-desc { font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.7); }
+  .mammal-examples { margin-top: 0.8rem; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+  /* ===== DIET CARDS ===== */
+  .diet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .diet-card {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 20px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s, transform 0.5s;
+    border: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+  }
+
+  .diet-card.visible { opacity: 1; transform: scale(1); }
+  .diet-card:hover { transform: scale(1.08) !important; }
+
+  .diet-emoji { font-size: 3.5rem; display: block; margin-bottom: 0.8rem; }
+  .diet-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .diet-example { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
+
+  /* ===== STAT BARS ===== */
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.6s;
+  }
+
+  .stat-row.visible { opacity: 1; }
+
+  .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.7); width: 120px; flex-shrink: 0; text-align: right; }
+  .stat-bar-wrap { flex: 1; height: 10px; background: rgba(255,255,255,0.08); border-radius: 5px; overflow: hidden; }
+  .stat-bar { height: 100%; border-radius: 5px; width: 0; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .stat-value { font-size: 0.85rem; color: var(--teal); width: 50px; flex-shrink: 0; }
+
+  /* ===== DID YOU KNOW ===== */
+  .did-you-know {
+    background: linear-gradient(135deg, rgba(0,212,170,0.08), rgba(0,212,170,0.02));
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .did-you-know.visible { opacity: 1; transform: translateX(0); }
+
+  .did-you-know::before {
+    content: '💡';
+    position: absolute;
+    top: -15px; right: 1.5rem;
+    font-size: 1.5rem;
+    background: var(--deep);
+    padding: 0 0.3rem;
+  }
+
+  .did-you-know p { font-size: 0.95rem; line-height: 1.9; color: rgba(255,255,255,0.8); }
+
+  /* ===== NAV DOT ===== */
+  .nav-dots {
+    position: fixed;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .nav-dot.active { transform: scale(1.8); background: var(--teal); }
+  .nav-dot:hover { background: rgba(255,255,255,0.5); }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--ice), var(--lime));
+    z-index: 1000;
+    transition: width 0.1s;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--deep);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-dev { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
+  .footer-dev span { color: var(--teal); }
+
+  /* ===== SUMMARY SECTION ===== */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin: 3rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .diet-grid { grid-template-columns: 1fr; }
+    .feather-showcase { grid-template-columns: 1fr; }
+  }
+
+  .summary-card {
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s, transform 0.5s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .summary-card.visible { opacity: 1; transform: translateY(0); }
+  .summary-card:hover { transform: translateY(-8px) !important; }
+
+  .summary-emoji { font-size: 2.5rem; display: block; margin-bottom: 0.6rem; }
+  .summary-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .summary-key { font-size: 0.75rem; color: rgba(255,255,255,0.55); }
+
+  /* ===== PARTICLES ===== */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: rgba(0,212,170,0.5);
+    border-radius: 50%;
+    animation: particleFloat linear infinite;
+  }
+
+  @keyframes particleFloat {
+    0% { transform: translateY(100vh) rotate(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== WATERMARK ===== */
+  .watermark {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.15);
+    z-index: 100;
+    white-space: nowrap;
+  }
+
+  /* ===== SECTION DIVIDER ===== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    margin: 1rem 0;
+  }
+
+  /* section backgrounds */
+  .bg-fish { background: radial-gradient(ellipse at top right, rgba(14,165,233,0.05) 0%, transparent 60%); }
+  .bg-amphibian { background: radial-gradient(ellipse at top left, rgba(34,197,94,0.05) 0%, transparent 60%); }
+  .bg-reptile { background: radial-gradient(ellipse at bottom right, rgba(245,158,11,0.05) 0%, transparent 60%); }
+  .bg-bird { background: radial-gradient(ellipse at top right, rgba(168,85,247,0.05) 0%, transparent 60%); }
+  .bg-mammal { background: radial-gradient(ellipse at bottom left, rgba(239,68,68,0.05) 0%, transparent 60%); }
+
+  /* heading glow */
+  .glow-fish { text-shadow: 0 0 40px rgba(14,165,233,0.5); color: #38bdf8; }
+  .glow-amphibian { text-shadow: 0 0 40px rgba(34,197,94,0.5); color: #4ade80; }
+  .glow-reptile { text-shadow: 0 0 40px rgba(245,158,11,0.5); color: #fbbf24; }
+  .glow-bird { text-shadow: 0 0 40px rgba(168,85,247,0.5); color: #c084fc; }
+  .glow-mammal { text-shadow: 0 0 40px rgba(239,68,68,0.5); color: #f87171; }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding: 1rem 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 50%;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .timeline-item {
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 55%;
+    position: relative;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-left: 0;
+    padding-right: 55%;
+    transform: translateX(-30px);
+  }
+
+  .timeline-item.visible { opacity: 1; transform: translateX(0) !important; }
+
+  .timeline-dot {
+    position: absolute;
+    right: calc(50% - 8px);
+    top: 1rem;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 3px solid var(--deep);
+    box-shadow: 0 0 20px rgba(0,212,170,0.5);
+  }
+
+  .timeline-content {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    max-width: 350px;
+  }
+
+  .timeline-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--amber); margin-bottom: 0.3rem; }
+  .timeline-content p { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.7; }
+
+  /* pulse on hero icons */
+  .pulse-anim {
+    animation: pulseBeat 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseBeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  /* BEAK section */
+  .beak-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .beak-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(168,85,247,0.15);
+    border-radius: 14px;
+    padding: 1.2rem;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .beak-card.visible { opacity: 1; transform: scale(1); }
+  .beak-card:hover { border-color: rgba(168,85,247,0.4); transform: scale(1.06) !important; }
+  .beak-emoji { font-size: 2rem; display: block; margin-bottom: 0.4rem; }
+  .beak-type { font-size: 0.8rem; font-weight: 700; color: #c084fc; margin-bottom: 0.2rem; }
+  .beak-use { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+
+  /* Importance section */
+  .importance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin: 1.5rem 0;
+  }
+
+  .importance-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.05);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .importance-item.visible { opacity: 1; transform: translateY(0); }
+  .importance-item:hover { border-color: rgba(239,68,68,0.2); background: rgba(239,68,68,0.05); }
+
+  .importance-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .importance-text {}
+  .importance-title { font-size: 0.9rem; font-weight: 700; color: #f87171; margin-bottom: 0.2rem; }
+  .importance-desc { font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* swim bladder diagram label */
+  .organ-label {
+    font-size: 0.72rem;
+    fill: rgba(255,255,255,0.7);
+    font-family: 'Vazirmatn', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Nav Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-section="0" title="مقدمه"></div>
+  <div class="nav-dot" data-section="1" title="ماهی‌ها"></div>
+  <div class="nav-dot" data-section="2" title="دوزیستان"></div>
+  <div class="nav-dot" data-section="3" title="خزندگان"></div>
+  <div class="nav-dot" data-section="4" title="پرندگان"></div>
+  <div class="nav-dot" data-section="5" title="پستانداران"></div>
+  <div class="nav-dot" data-section="6" title="جمع‌بندی"></div>
+</nav>
+
+<div class="watermark">توسعه‌دهنده: مدثر آسکانی</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="section-0">
+  <div class="bubbles" id="bubbles"></div>
+  
+  <div class="hero-content">
+    <div class="hero-badge">فصل چهاردهم · علوم نهم · ۱۴۰۴</div>
+    <h1 class="hero-title">
+      <span style="color:rgba(255,255,255,0.9)">جانوران</span>
+      <span class="highlight">مهره‌دار</span>
+    </h1>
+    <p class="hero-subtitle">سفری شگفت‌انگیز به دنیای پیچیده‌ترین جانوران کره زمین</p>
+    <div class="hero-groups">
+      <div class="hero-group-chip chip-fish">🐟 ماهی‌ها</div>
+      <div class="hero-group-chip chip-amphibian">🐸 دوزیستان</div>
+      <div class="hero-group-chip chip-reptile">🦎 خزندگان</div>
+      <div class="hero-group-chip chip-bird">🦅 پرندگان</div>
+      <div class="hero-group-chip chip-mammal">🦁 پستانداران</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">
+    ادامه
+    <span class="arrow"></span>
+  </div>
+</section>
+
+<!-- ===== INTRO ===== -->
+<section class="intro-section" id="intro">
+  <div class="section-label observe-me">معرفی</div>
+  <h2 style="font-size:2rem;font-weight:900;margin-bottom:1.5rem;" class="observe-me">جانورانی با ستون مهره</h2>
+  <p class="intro-text observe-me">
+    مهره‌داران جانورانی هستند که در استخوانگان داخلی خود 
+    <strong>ستونی از مهره</strong> دارند که بخش‌های دیگر اسکلت به آن متصل است.
+    این ویژگی، آن‌ها را از دیگر جانوران متمایز می‌کند.
+    مهره‌داران در <strong>پنج گروه</strong> اصلی طبقه‌بندی می‌شوند و در زندگی ما اهمیت بسیار زیادی دارند؛
+    از تأمین غذا و پوشاک گرفته تا حمل بار، سواری و تفریح.
+  </p>
+</section>
+
+<!-- ===== FISH ===== -->
+<section class="animal-section bg-fish" id="section-1" style="--section-color:#0ea5e9">
+  <div class="container">
+    <div class="section-header observe-me">
+      <div class="section-icon" style="background:linear-gradient(135deg,#0369a1,#0ea5e9)">
+        <span class="pulse-anim">🐟</span>
+      </div>
+      <div class="section-title-wrap">
+        <div class="section-number">گروه اول</div>
+        <h2 class="section-title glow-fish">ماهی‌ها</h2>
+      </div>
+    </div>
+
+    <!-- Fish anatomy SVG -->
+    <div class="fish-diagram observe-me" style="margin-bottom:2rem;">
+      <svg class="fish-svg" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fishGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#0369a1;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#38bdf8;stop-opacity:0.8"/>
+          </linearGradient>
+          <filter id="glow-fish">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Fish body -->
+        <ellipse cx="380" cy="120" rx="220" ry="65" fill="url(#fishGrad)" filter="url(#glow-fish)" opacity="0.9"/>
+        <!-- Tail -->
+        <polygon points="160,120 100,60 100,180" fill="#0369a1" opacity="0.9"/>
+        <!-- Head -->
+        <ellipse cx="580" cy="120" rx="60" ry="55" fill="#0284c7" opacity="0.9"/>
+        <!-- Eye -->
+        <circle cx="600" cy="110" r="12" fill="#fff"/>
+        <circle cx="602" cy="112" r="6" fill="#001f3f"/>
+        <!-- Dorsal fin (hard) -->
+        <polygon points="350,55 300,20 250,55" fill="#0ea5e9" opacity="0.8"/>
+        <!-- Dorsal fin (soft) -->
+        <polygon points="420,55 400,28 370,55" fill="#38bdf8" opacity="0.7"/>
+        <!-- Pectoral fin -->
+        <ellipse cx="530" cy="150" rx="30" ry="15" fill="#7dd3fc" opacity="0.8" transform="rotate(-30,530,150)"/>
+        <!-- Pelvic fin -->
+        <ellipse cx="430" cy="170" rx="25" ry="12" fill="#7dd3fc" opacity="0.7" transform="rotate(-20,430,170)"/>
+        <!-- Anal fin -->
+        <polygon points="280,185 250,210 220,185" fill="#0ea5e9" opacity="0.7"/>
+        <!-- Lateral line -->
+        <line x1="165" y1="115" x2="560" y2="115" stroke="#bae6fd" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
+        <!-- Labels -->
+        <text x="300" y="15" class="organ-label" text-anchor="middle">باله پشتی سخت</text>
+        <text x="400" y="22" class="organ-label" text-anchor="middle">باله پشتی نرم</text>
+        <text x="100" y="55" class="organ-label" text-anchor="middle">باله دمی</text>
+        <text x="550" y="170" class="organ-label" text-anchor="middle">باله سینه‌ای</text>
+        <text x="430" y="195" class="organ-label" text-anchor="middle">باله شکمی</text>
+        <text x="255" y="220" class="organ-label" text-anchor="middle">باله مخرجی</text>
+        <text x="350" y="108" class="organ-label" text-anchor="middle" fill="#bae6fd">خط جانبی</text>
+        <!-- Gill cover -->
+        <path d="M 540,80 Q 560,120 540,160" stroke="#7dd3fc" stroke-width="4" fill="none" opacity="0.8"/>
+        <text x="570" y="78" class="organ-label" fill="#bae6fd" text-anchor="start">سرپوش آبششی</text>
+      </svg>
+    </div>
+
+    <div class="cards-grid">
+      <div class="info-card observe-me" style="--card-color:#38bdf8">
+        <span class="info-card-icon">🏊</span>
+        <div class="info-card-title">شکل بدن</div>
+        <p class="info-card-text">بیشتر ماهی‌ها <strong>دوکی‌شکل</strong> هستند؛ یعنی سر و دم کشیده و میانه بدن پهن است. این شکل برای حرکت در آب عالی است.</p>
+      </div>
+      <div class="info-card observe-me" style="--card-color:#0ea5e9;transition-delay:0.1s">
+        <span class="info-card-icon">🫁</span>
+        <div class="info-card-title">تنفس با آبشش</div>
+        <p class="info-card-text">آبشش‌ها دارای <strong>مویرگ‌های خونی فراوان</strong> هستند. جریان آب از روی آن‌ها موجب تبادل گازی بین آب و خون می‌شود.</p>
+      </div>
+      <div class="info-card observe-me" style="--card-color:#7dd3fc;transition-delay:0.2s">
+        <span class="info-card-icon">🐠</span>
+        <div class="info-card-title">پوست لغزنده</div>
+        <p class="info-card-text">سطح بدن بیشتر ماهی‌ها از <strong>پولک (فلس)</strong> پوشیده شده است که لغزنده بودن آن حرکت در آب را آسان‌تر می‌کند.</p>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div class="big-feature observe-me" style="--feature-color:#0ea5e9">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.3rem;font-weight:700;color:#38bdf8;margin-bottom:1.5rem;">📊 مقایسه ماهی‌های استخوانی و غضروفی</h3>
+      <table class="compare-table observe-me">
+        <thead>
+          <tr>
+            <th>مشخصه</th>
+            <th>ماهی غضروفی 🦈</th>
+            <th>ماهی استخوانی 🐟</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>دهان</td>
+            <td>در سطح شکمی</td>
+            <td>در جلوی بدن</td>
+          </tr>
+          <tr>
+            <td>دم</td>
+            <td>نامتقارن</td>
+            <td>متقارن</td>
+          </tr>
+          <tr>
+            <td>سرپوش آبششی</td>
+            <td>ندارند</td>
+            <td>دارند</td>
+          </tr>
+          <tr>
+            <td>مثال</td>
+            <td>کوسه، اره‌ماهی، خاویار</td>
+            <td>قزل‌آلا، شیرماهی</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="did-you-know observe-me">
+      <p>🌊 سرانه مصرف آبزیان در ایران <strong>۸ کیلوگرم در سال</strong> است که بسیار کمتر از میانگین جهانی (<strong>۱۸ کیلوگرم</strong>) است. ماهی‌های خاویاری دریای خزر، <strong>مرغوب‌ترین خاویار جهان</strong> را تولید می‌کنند.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AMPHIBIANS ===== -->
+<section class="animal-section bg-amphibian" id="section-2" style="--section-color:#22c55e">
+  <div class="container">
+    <div class="section-header observe-me">
+      <div class="section-icon" style="background:linear-gradient(135deg,#166534,#22c55e)">
+        <span class="pulse-anim">🐸</span>
+      </div>
+      <div class="section-title-wrap">
+        <div class="section-number">گروه دوم</div>
+        <h2 class="section-title glow-amphibian">دوزیستان</h2>
+      </div>
+    </div>
+
+    <!-- Life cycle -->
+    <div class="big-feature observe-me" style="--feature-color:#22c55e">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.3rem;font-weight:700;color:#4ade80;margin-bottom:0.5rem;">🔄 چرخه زندگی قورباغه</h3>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;margin-bottom:1.5rem;">چرا به آن‌ها دوزیست می‌گویند؟</p>
+      <div class="lifecycle">
+        <div class="lifecycle-step observe-me" style="transition-delay:0s">
+          <div class="lifecycle-bubble" style="background:radial-gradient(circle at 30% 30%, rgba(34,197,94,0.3), rgba(34,197,94,0.1));border:2px solid rgba(34,197,94,0.4)">🥚</div>
+          <div class="lifecycle-label">تخم در آب</div>
+        </div>
+        <div class="lifecycle-arrow">←</div>
+        <div class="lifecycle-step observe-me" style="transition-delay:0.15s">
+          <div class="lifecycle-bubble" style="background:radial-gradient(circle at 30% 30%, rgba(16,185,129,0.3), rgba(16,185,129,0.1));border:2px solid rgba(16,185,129,0.4)">🪱</div>
+          <div class="lifecycle-label">نوزاد (آبشش و دم)</div>
+        </div>
+        <div class="lifecycle-arrow">←</div>
+        <div class="lifecycle-step observe-me" style="transition-delay:0.3s">
+          <div class="lifecycle-bubble" style="background:radial-gradient(circle at 30% 30%, rgba(5,150,105,0.3), rgba(5,150,105,0.1));border:2px solid rgba(5,150,105,0.4)">🦎</div>
+          <div class="lifecycle-label">نیمه‌بالغ (شش رشد می‌کند)</div>
+        </div>
+        <div class="lifecycle-arrow">←</div>
+        <div class="lifecycle-step observe-me" style="transition-delay:0.45s">
+          <div class="lifecycle-bubble" style="background:radial-gradient(circle at 30% 30%, rgba(34,197,94,0.4), rgba(34,197,94,0.15));border:2px solid rgba(34,197,94,0.6)">🐸</div>
+          <div class="lifecycle-label">قورباغه بالغ (آب و خشکی)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="info-card observe-me" style="--card-color:#4ade80">
+        <span class="info-card-icon">🌊</span>
+        <div class="info-card-title">زندگی دوگانه</div>
+        <p class="info-card-text">بخشی از عمر در <strong>آب</strong> و بخشی در <strong>خشکی</strong>. نوزاد با آبشش تنفس می‌کند اما قورباغه بالغ با شش.</p>
+      </div>
+      <div class="info-card observe-me" style="--card-color:#86efac;transition-delay:0.1s">
+        <span class="info-card-icon">🍃</span>
+        <div class="info-card-title">تنفس پوستی</div>
+        <p class="info-card-text">پوست نازک، مرطوب و بدون پولک قورباغه امکان <strong>تنفس از طریق پوست</strong> را فراهم می‌کند.</p>
+      </div>
+      <div class="info-card observe-me" style="--card-color:#22c55e;transition-delay:0.2s">
+        <span class="info-card-icon">🦗</span>
+        <div class="info-card-title">تغذیه</div>
+        <p class="info-card-text">قورباغه بالغ بیشتر از <strong>حشرات</strong> تغذیه می‌کند. نوزاد از جلبک‌ها و گیاهان آبزی تغذیه می‌کند.</p>
+      </div>
+    </div>
+
+    <!-- Types of amphibians -->
+    <div class="big-feature observe-me" style="--feature-color:#22c55e">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.2rem;font-weight:700;color:#4ade80;margin-bottom:1.5rem;">🐸 انواع دوزیستان</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+        <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:1.2rem;text-align:center">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem">🐸</div>
+          <div style="font-size:1rem;font-weight:700;color:#4ade80;margin-bottom:0.3rem">قورباغه</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.6)">دوزیست بی‌دم — بدن کشیده، پوست صاف و لغزنده — بیشتر در آب</div>
+        </div>
+        <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:1.2rem;text-align:center">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem">🐊</div>
+          <div style="font-size:1rem;font-weight:700;color:#4ade80;margin-bottom:0.3rem">وزغ</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.6)">دوزیست بی‌دم — بدن پهن، پوست خشک و زبر — بیشتر در خشکی</div>
+        </div>
+        <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:1.2rem;text-align:center">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem">🦎</div>
+          <div style="font-size:1rem;font-weight:700;color:#4ade80;margin-bottom:0.3rem">سمندر</div>
+          <div style="font-size:0.8rem;color:rgba(255,255,255,0.6)">دوزیست دم‌دار — شبیه مارمولک اما با پوست مرطوب</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REPTILES ===== -->
+<section class="animal-section bg-reptile" id="section-3" style="--section-color:#f59e0b">
+  <div class="container">
+    <div class="section-header observe-me">
+      <div class="section-icon" style="background:linear-gradient(135deg,#713f12,#f59e0b)">
+        <span class="pulse-anim">🦎</span>
+      </div>
+      <div class="section-title-wrap">
+        <div class="section-number">گروه سوم</div>
+        <h2 class="section-title glow-reptile">خزندگان</h2>
+      </div>
+    </div>
+
+    <div class="big-feature observe-me" style="--feature-color:#f59e0b">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.2rem;font-weight:700;color:#fbbf24;margin-bottom:0.8rem;">🦕 تاریخچه</h3>
+      <div class="timeline">
+        <div class="timeline-item observe-me">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4>۲۰۰ میلیون سال پیش</h4>
+            <p>دایناسورها (خزندگان قدیمی) بزرگ‌ترین گروه مهره‌داران روی زمین بودند. اندازه آن‌ها بسیار بزرگ‌تر از خزندگان امروزی بود.</p>
+          </div>
+        </div>
+        <div class="timeline-item observe-me">
+          <div class="timeline-dot" style="background:#f59e0b;box-shadow:0 0 20px rgba(245,158,11,0.5)"></div>
+          <div class="timeline-content">
+            <h4>امروز</h4>
+            <p>تنوع خزندگان نسبت به گذشته بسیار محدود شده است. گروه‌های اصلی شامل مارها، الک‌پشت‌ها، سوسمارها و کروکودیل‌ها هستند.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-feature observe-me" style="--feature-color:#f59e0b">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.2rem;font-weight:700;color:#fbbf24;margin-bottom:0.8rem;">🔑 ویژگی اصلی</h3>
+      <p style="color:rgba(255,255,255,0.75);line-height:1.9;font-size:0.95rem">پوست خزندگان با <strong style="color:#fbbf24">پولک‌های ضخیم و سخت</strong> یا صفحات استخوانی پوشیده شده است. این ساختار باعث می‌شود آب بدن‌شان از دست نرود و جانور کمتر به آب نیاز پیدا کند — در نتیجه می‌توانند در <strong style="color:#fbbf24">خشکی</strong> زندگی کنند.</p>
+    </div>
+
+    <h3 style="font-size:1.3rem;font-weight:700;color:#fbbf24;margin-bottom:1.5rem;" class="observe-me">🦎 گروه‌های اصلی خزندگان امروزی</h3>
+    <div class="reptile-grid">
+      <div class="reptile-card observe-me" style="transition-delay:0s">
+        <span class="reptile-emoji">🐍</span>
+        <div class="reptile-name">مارها</div>
+        <div class="reptile-desc">بدون دست و پا ـ انواع سمی و غیرسمی ـ از سم آن‌ها در داروهای قلبی و ضدسرطان استفاده می‌شود</div>
+      </div>
+      <div class="reptile-card observe-me" style="transition-delay:0.1s">
+        <span class="reptile-emoji">🐢</span>
+        <div class="reptile-name">الک‌پشت‌ها</div>
+        <div class="reptile-desc">انواع خشکی‌زی و دریازی ـ الک سخت از بخش‌های اسکلت ـ حرکت کند</div>
+      </div>
+      <div class="reptile-card observe-me" style="transition-delay:0.2s">
+        <span class="reptile-emoji">🦎</span>
+        <div class="reptile-name">سوسمارها</div>
+        <div class="reptile-desc">مارمولک و آفتاب‌پرست ـ از حشرات تغذیه می‌کنند ـ تغییر رنگ و قطع دم از ویژگی‌های آن‌هاست</div>
+      </div>
+      <div class="reptile-card observe-me" style="transition-delay:0.3s">
+        <span class="reptile-emoji">🐊</span>
+        <div class="reptile-name">کروکودیل‌ها</div>
+        <div class="reptile-desc">جثه بزرگ ـ چشم روی سر و بینی روی پوزه دراز ـ تمساح نمونه ایرانی آن است</div>
+      </div>
+    </div>
+
+    <div class="did-you-know observe-me" style="border-color:rgba(245,158,11,0.2);background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(245,158,11,0.02))">
+      <p>🐍 مارهای سمی دندان‌های ویژه‌ای به نام <strong>دندان زهری</strong> دارند که به کیسه زهر متصل است. سر مارهای سمی <strong>مثلثی‌شکل</strong> است اما سر مارهای غیرسمی معمولاً گرد است.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BIRDS ===== -->
+<section class="animal-section bg-bird" id="section-4" style="--section-color:#a855f7">
+  <div class="container">
+    <div class="section-header observe-me">
+      <div class="section-icon" style="background:linear-gradient(135deg,#581c87,#a855f7)">
+        <span class="pulse-anim">🦅</span>
+      </div>
+      <div class="section-title-wrap">
+        <div class="section-number">گروه چهارم</div>
+        <h2 class="section-title glow-bird">پرندگان</h2>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="info-card observe-me" style="--card-color:#c084fc">
+        <span class="info-card-icon">🦴</span>
+        <div class="info-card-title">استخوان توخالی</div>
+        <p class="info-card-text">استخوان‌های <strong>توخالی و محکم</strong> وزن پرنده را کم می‌کنند و پرواز را ممکن می‌سازند.</p>
+      </div>
+      <div class="info-card observe-me" style="--card-color:#a855f7;transition-delay:0.1s">
+        <span class="info-card-icon">🌬️</span>
+        <div class="info-card-title">کیسه‌های هوادار</div>
+        <p class="info-card-text">در کنار شش‌ها، <strong>کیسه‌های هوادار</strong> قرار دارند که کارایی جذب اکسیژن را افزایش می‌دهند.</p>
+      </div>
+      <div class="info-card observe-me" style="--card-color:#d8b4fe;transition-delay:0.2s">
+        <span class="info-card-icon">🚀</span>
+        <div class="info-card-title">بدن دوکی + بدون مثانه</div>
+        <p class="info-card-text">شکل دوکی بدن کمترین مقاومت هوا را ایجاد می‌کند. نداشتن مثانه وزن را کمتر می‌کند.</p>
+      </div>
+    </div>
+
+    <!-- Feather types -->
+    <h3 style="font-size:1.3rem;font-weight:700;color:#c084fc;margin:2rem 0 1rem;" class="observe-me">🪶 انواع پر در پرندگان</h3>
+    <div class="feather-showcase">
+      <div class="feather-card observe-me" style="transition-delay:0s">
+        <span class="feather-emoji">🪶</span>
+        <div class="feather-name">کرک‌پر</div>
+        <div class="feather-role">عایق حرارتی — گرمای بدن را حفظ می‌کند — نرم و ظریف</div>
+      </div>
+      <div class="feather-card observe-me" style="transition-delay:0.15s">
+        <span class="feather-emoji">🛡️</span>
+        <div class="feather-name">پوش‌پر</div>
+        <div class="feather-role">شکل ظاهری بدن — پوشش بیرونی — از بدن محافظت می‌کند</div>
+      </div>
+      <div class="feather-card observe-me" style="transition-delay:0.3s">
+        <span class="feather-emoji">✈️</span>
+        <div class="feather-name">شاه‌پر</div>
+        <div class="feather-role">در بال و دم — پرواز و مانور — بزرگ‌ترین و محکم‌ترین نوع پر</div>
+      </div>
+    </div>
+
+    <!-- Beak types -->
+    <h3 style="font-size:1.3rem;font-weight:700;color:#c084fc;margin:2rem 0 1rem;" class="observe-me">👄 انواع منقار و طبقه‌بندی پرندگان</h3>
+    <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;margin-bottom:1.2rem;" class="observe-me">شکل منقار نشان‌دهنده نوع غذا و شکل پاها نشان‌دهنده محل زندگی پرنده است.</p>
+    <div class="beak-grid">
+      <div class="beak-card observe-me">
+        <span class="beak-emoji">🦅</span>
+        <div class="beak-type">قلاب‌دار</div>
+        <div class="beak-use">شکار جانوران (عقاب، شاهین)</div>
+      </div>
+      <div class="beak-card observe-me" style="transition-delay:0.1s">
+        <span class="beak-emoji">🦆</span>
+        <div class="beak-type">پهن و صاف</div>
+        <div class="beak-use">صاف کردن آب (اردک)</div>
+      </div>
+      <div class="beak-card observe-me" style="transition-delay:0.2s">
+        <span class="beak-emoji">🦜</span>
+        <div class="beak-type">کوتاه و ضخیم</div>
+        <div class="beak-use">شکستن دانه‌ها (گنجشک)</div>
+      </div>
+      <div class="beak-card observe-me" style="transition-delay:0.3s">
+        <span class="beak-emoji">🦩</span>
+        <div class="beak-type">دراز و نازک</div>
+        <div class="beak-use">صید ماهی از آب (حواصیل)</div>
+      </div>
+    </div>
+
+    <!-- Importance -->
+    <div class="big-feature observe-me" style="--feature-color:#a855f7;margin-top:2rem">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.2rem;font-weight:700;color:#c084fc;margin-bottom:1.2rem;">⭐ نقش پرندگان در زندگی ما</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">
+        <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:1rem">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🍗</div>
+          <div style="font-size:0.85rem;font-weight:700;color:#d8b4fe;margin-bottom:0.2rem">تأمین غذا</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.6)">مرغ، اردک، بوقلمون و غاز منبع گوشت و تخم هستند</div>
+        </div>
+        <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:1rem">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🎵</div>
+          <div style="font-size:0.85rem;font-weight:700;color:#d8b4fe;margin-bottom:0.2rem">لذت طبیعت</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.6)">صدای قناری و بلبل در طبیعت لذت‌بخش است</div>
+        </div>
+        <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:1rem">
+          <div style="font-size:1.5rem;margin-bottom:0.4rem">🌾</div>
+          <div style="font-size:0.85rem;font-weight:700;color:#d8b4fe;margin-bottom:0.2rem">کمک به کشاورزی</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.6)">خوردن حشرات و دانه علف‌های هرز به کشاورزان کمک می‌کند</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAMMALS ===== -->
+<section class="animal-section bg-mammal" id="section-5" style="--section-color:#ef4444">
+  <div class="container">
+    <div class="section-header observe-me">
+      <div class="section-icon" style="background:linear-gradient(135deg,#7f1d1d,#ef4444)">
+        <span class="pulse-anim">🦁</span>
+      </div>
+      <div class="section-title-wrap">
+        <div class="section-number">گروه پنجم</div>
+        <h2 class="section-title glow-mammal">پستانداران</h2>
+      </div>
+    </div>
+
+    <div class="big-feature observe-me" style="--feature-color:#ef4444">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.2rem;font-weight:700;color:#f87171;margin-bottom:1rem;">🔑 ویژگی‌های اصلی</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem">
+        <div style="padding:1rem;background:rgba(239,68,68,0.08);border-radius:12px;border:1px solid rgba(239,68,68,0.15)">
+          <div style="font-size:1.8rem;margin-bottom:0.4rem">🥛</div>
+          <div style="font-size:0.9rem;font-weight:700;color:#fca5a5;margin-bottom:0.3rem">غدد شیری</div>
+          <div style="font-size:0.82rem;color:rgba(255,255,255,0.65)">نوزادان از شیر مادر تغذیه می‌کنند</div>
+        </div>
+        <div style="padding:1rem;background:rgba(239,68,68,0.08);border-radius:12px;border:1px solid rgba(239,68,68,0.15)">
+          <div style="font-size:1.8rem;margin-bottom:0.4rem">🧥</div>
+          <div style="font-size:0.9rem;font-weight:700;color:#fca5a5;margin-bottom:0.3rem">مو یا پشم</div>
+          <div style="font-size:0.82rem;color:rgba(255,255,255,0.65)">عایق خوبی برای حفظ دمای بدن</div>
+        </div>
+        <div style="padding:1rem;background:rgba(239,68,68,0.08);border-radius:12px;border:1px solid rgba(239,68,68,0.15)">
+          <div style="font-size:1.8rem;margin-bottom:0.4rem">🧠</div>
+          <div style="font-size:0.9rem;font-weight:700;color:#fca5a5;margin-bottom:0.3rem">مغز پیچیده</div>
+          <div style="font-size:0.82rem;color:rgba(255,255,255,0.65)">مناطق هوش، حافظه و هماهنگی عضلات توسعه یافته</div>
+        </div>
+        <div style="padding:1rem;background:rgba(239,68,68,0.08);border-radius:12px;border:1px solid rgba(239,68,68,0.15)">
+          <div style="font-size:1.8rem;margin-bottom:0.4rem">🌍</div>
+          <div style="font-size:0.9rem;font-weight:700;color:#fca5a5;margin-bottom:0.3rem">همه جا</div>
+          <div style="font-size:0.82rem;color:rgba(255,255,255,0.65)">در آب، خشکی و حتی زیرزمین یافت می‌شوند</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mammal types -->
+    <h3 style="font-size:1.3rem;font-weight:700;color:#f87171;margin:2rem 0 1rem;" class="observe-me">🐾 طبقه‌بندی بر اساس پرورش جنین</h3>
+    <div class="mammal-types">
+      <div class="mammal-type-card observe-me" style="--mammal-bg:#fbbf24;--mammal-border:rgba(251,191,36,0.2);--mammal-color:#fbbf24;transition-delay:0s">
+        <div class="mammal-type-card-bg"></div>
+        <div class="mammal-type-border"></div>
+        <div class="mammal-type-content">
+          <span class="mammal-big-emoji">🦆</span>
+          <div class="mammal-type-name">تخم‌گذار</div>
+          <div class="mammal-type-desc">نوزاد درون تخم رشد می‌کند. پس از خروج از تخم از شیر مادر تغذیه می‌کند.</div>
+          <div class="mammal-examples">مثال: پلاتی‌پوس (نوک اردکی)</div>
+        </div>
+      </div>
+      <div class="mammal-type-card observe-me" style="--mammal-bg:#a855f7;--mammal-border:rgba(168,85,247,0.2);--mammal-color:#c084fc;transition-delay:0.15s">
+        <div class="mammal-type-card-bg"></div>
+        <div class="mammal-type-border"></div>
+        <div class="mammal-type-content">
+          <span class="mammal-big-emoji">🦘</span>
+          <div class="mammal-type-name">کیسه‌دار</div>
+          <div class="mammal-type-desc">نوزاد به صورت نارس متولد می‌شود و در کیسه شکمی مادر به رشد ادامه می‌دهد.</div>
+          <div class="mammal-examples">مثال: کانگورو</div>
+        </div>
+      </div>
+      <div class="mammal-type-card observe-me" style="--mammal-bg:#ef4444;--mammal-border:rgba(239,68,68,0.2);--mammal-color:#f87171;transition-delay:0.3s">
+        <div class="mammal-type-card-bg"></div>
+        <div class="mammal-type-border"></div>
+        <div class="mammal-type-content">
+          <span class="mammal-big-emoji">🐘</span>
+          <div class="mammal-type-name">جفت‌دار</div>
+          <div class="mammal-type-desc">دوره جنینی درون رحم مادر. جفت مواد غذایی و اکسیژن را از خون مادر به جنین می‌رساند.</div>
+          <div class="mammal-examples">مثال: بیشتر پستانداران روی زمین</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diet -->
+    <h3 style="font-size:1.3rem;font-weight:700;color:#f87171;margin:2rem 0 1rem;" class="observe-me">🍽️ رژیم غذایی پستانداران جفت‌دار</h3>
+    <div class="diet-grid">
+      <div class="diet-card observe-me" style="background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.2);transition-delay:0s">
+        <span class="diet-emoji">🌿</span>
+        <div class="diet-name" style="color:#4ade80">گیاه‌خوار</div>
+        <div class="diet-example">گاو، گوسفند، اسب، زرافه</div>
+      </div>
+      <div class="diet-card observe-me" style="background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2);transition-delay:0.1s">
+        <span class="diet-emoji">🥩</span>
+        <div class="diet-name" style="color:#f87171">گوشت‌خوار</div>
+        <div class="diet-example">شیر، گرگ، یوزپلنگ، کفتار</div>
+      </div>
+      <div class="diet-card observe-me" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2);transition-delay:0.2s">
+        <span class="diet-emoji">🍎</span>
+        <div class="diet-name" style="color:#fbbf24">همه‌چیزخوار</div>
+        <div class="diet-example">خرس، گراز، انسان، خوک</div>
+      </div>
+    </div>
+
+    <!-- Importance of mammals -->
+    <h3 style="font-size:1.3rem;font-weight:700;color:#f87171;margin:2rem 0 1rem;" class="observe-me">⭐ اهمیت پستانداران</h3>
+    <div class="importance-grid">
+      <div class="importance-item observe-me">
+        <div class="importance-icon">🍖</div>
+        <div class="importance-text">
+          <div class="importance-title">تأمین غذا و پوشاک</div>
+          <div class="importance-desc">از گوشت، شیر و پوست پستانداران برای غذا و پوشاک استفاده می‌شود</div>
+        </div>
+      </div>
+      <div class="importance-item observe-me" style="transition-delay:0.1s">
+        <div class="importance-icon">🐴</div>
+        <div class="importance-text">
+          <div class="importance-title">حمل بار و سواری</div>
+          <div class="importance-desc">اسب، شتر و خر برای جابجایی و باربری استفاده می‌شوند</div>
+        </div>
+      </div>
+      <div class="importance-item observe-me" style="transition-delay:0.2s">
+        <div class="importance-icon">🌿</div>
+        <div class="importance-text">
+          <div class="importance-title">پاکسازی طبیعت</div>
+          <div class="importance-desc">کفتار و شغال با خوردن لاشه جانوران از انتشار بیماری‌ها جلوگیری می‌کنند</div>
+        </div>
+      </div>
+      <div class="importance-item observe-me" style="transition-delay:0.3s">
+        <div class="importance-icon">🌲</div>
+        <div class="importance-text">
+          <div class="importance-title">حفظ جنگل</div>
+          <div class="importance-desc">سنجاب ایرانی با ذخیره دانه‌ها در حفظ جنگل‌های بلوط زاگرس نقش دارد</div>
+        </div>
+      </div>
+      <div class="importance-item observe-me" style="transition-delay:0.4s">
+        <div class="importance-icon">🦾</div>
+        <div class="importance-text">
+          <div class="importance-title">تعادل زیستی</div>
+          <div class="importance-desc">گوشت‌خوارانی مثل گرگ و یوزپلنگ از بیماری‌های واگیر جلوگیری می‌کنند</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="did-you-know observe-me" style="border-color:rgba(239,68,68,0.2);background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.02))">
+      <p>🐋 بزرگ‌ترین پستانداران <strong>وال‌های آبی‌رنگ</strong> هستند که طول آن‌ها به بیش از <strong>۳۰ متر</strong> و وزن‌شان به بیش از <strong>۱۹۰ تن</strong> می‌رسد. کوچک‌ترین پستانداران نوعی <strong>خفاش</strong> با وزن حدود ۲ گرم و حشره‌خوار کوتوله ایران با وزن ۲ تا ۳ گرم هستند.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUMMARY ===== -->
+<section class="animal-section" id="section-6" style="background:radial-gradient(ellipse at center, rgba(0,212,170,0.05) 0%, transparent 70%)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div class="section-label observe-me">مرور کلی</div>
+      <h2 style="font-size:2.5rem;font-weight:900;margin-top:0.5rem;" class="observe-me">جمع‌بندی فصل ۱۴</h2>
+      <p style="color:rgba(255,255,255,0.5);margin-top:0.8rem;font-size:0.95rem;" class="observe-me">پنج گروه اصلی مهره‌داران</p>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card observe-me" style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(14,165,233,0.05));border:1px solid rgba(14,165,233,0.2);transition-delay:0s">
+        <span class="summary-emoji">🐟</span>
+        <div class="summary-name" style="color:#38bdf8">ماهی‌ها</div>
+        <div class="summary-key">آبشش + باله + پولک</div>
+      </div>
+      <div class="summary-card observe-me" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.2);transition-delay:0.1s">
+        <span class="summary-emoji">🐸</span>
+        <div class="summary-name" style="color:#4ade80">دوزیستان</div>
+        <div class="summary-key">آب + خشکی + تنفس پوستی</div>
+      </div>
+      <div class="summary-card observe-me" style="background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));border:1px solid rgba(245,158,11,0.2);transition-delay:0.2s">
+        <span class="summary-emoji">🦎</span>
+        <div class="summary-name" style="color:#fbbf24">خزندگان</div>
+        <div class="summary-key">پولک ضخیم + خشکی</div>
+      </div>
+      <div class="summary-card observe-me" style="background:linear-gradient(135deg,rgba(168,85,247,0.15),rgba(168,85,247,0.05));border:1px solid rgba(168,85,247,0.2);transition-delay:0.3s">
+        <span class="summary-emoji">🦅</span>
+        <div class="summary-name" style="color:#c084fc">پرندگان</div>
+        <div class="summary-key">پر + استخوان توخالی + پرواز</div>
+      </div>
+      <div class="summary-card observe-me" style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.05));border:1px solid rgba(239,68,68,0.2);transition-delay:0.4s">
+        <span class="summary-emoji">🦁</span>
+        <div class="summary-name" style="color:#f87171">پستانداران</div>
+        <div class="summary-key">شیر + مو + جنین در رحم</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="big-feature observe-me" style="--feature-color:#00d4aa">
+      <div class="big-feature-bg"></div>
+      <h3 style="font-size:1.2rem;font-weight:700;color:var(--teal);margin-bottom:1.5rem;">📊 مقایسه پیچیدگی گروه‌ها</h3>
+      <div class="stat-row observe-me">
+        <div class="stat-label">ماهی‌ها</div>
+        <div class="stat-bar-wrap"><div class="stat-bar" style="background:linear-gradient(90deg,#0369a1,#38bdf8)" data-width="40"></div></div>
+        <div class="stat-value">پایه</div>
+      </div>
+      <div class="stat-row observe-me" style="transition-delay:0.1s">
+        <div class="stat-label">دوزیستان</div>
+        <div class="stat-bar-wrap"><div class="stat-bar" style="background:linear-gradient(90deg,#166534,#4ade80)" data-width="55"></div></div>
+        <div class="stat-value">متوسط</div>
+      </div>
+      <div class="stat-row observe-me" style="transition-delay:0.2s">
+        <div class="stat-label">خزندگان</div>
+        <div class="stat-bar-wrap"><div class="stat-bar" style="background:linear-gradient(90deg,#713f12,#fbbf24)" data-width="65"></div></div>
+        <div class="stat-value">متوسط+</div>
+      </div>
+      <div class="stat-row observe-me" style="transition-delay:0.3s">
+        <div class="stat-label">پرندگان</div>
+        <div class="stat-bar-wrap"><div class="stat-bar" style="background:linear-gradient(90deg,#581c87,#c084fc)" data-width="78"></div></div>
+        <div class="stat-value">پیشرفته</div>
+      </div>
+      <div class="stat-row observe-me" style="transition-delay:0.4s">
+        <div class="stat-label">پستانداران</div>
+        <div class="stat-bar-wrap"><div class="stat-bar" style="background:linear-gradient(90deg,#7f1d1d,#f87171)" data-width="95"></div></div>
+        <div class="stat-value">پیچیده</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-logo">🧬 مهره‌داران</div>
+  <p class="footer-dev">توسعه‌دهنده: <span>مدثر آسکانی</span></p>
+  <p style="color:rgba(255,255,255,0.15);font-size:0.8rem;margin-top:0.5rem">علوم تجربی — پایه نهم — فصل چهاردهم — ۱۴۰۴</p>
+</footer>
+
+<!-- ===== دکمه بازگشت به منو ===== -->
+<a href="index.html" class="back-to-menu" title="بازگشت به منوی اصلی">
+    <span>🏠</span>
+    <span class="back-text">بازگشت به منو</span>
+</a>
+
+<style>
+    .back-to-menu {
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(6, 16, 32, 0.85);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(0, 212, 170, 0.4);
+        border-radius: 100px;
+        padding: 10px 20px 10px 16px;
+        color: #e8f0ff;
+        text-decoration: none;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 212, 170, 0.08);
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        cursor: pointer;
+        letter-spacing: 0.3px;
+    }
+
+    .back-to-menu:hover {
+        transform: translateY(-3px) scale(1.03);
+        border-color: #00d4aa;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 212, 170, 0.25);
+        background: rgba(0, 212, 170, 0.12);
+    }
+
+    .back-to-menu .back-text {
+        display: inline-block;
+    }
+
+    @media (max-width: 600px) {
+        .back-to-menu {
+            padding: 8px 14px 8px 10px;
+            font-size: 0.8rem;
+            bottom: 16px;
+            left: 16px;
+        }
+        .back-to-menu .back-text {
+            display: none;
+        }
+        .back-to-menu span:first-child {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+// ===== CURSOR =====
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  cursorDot.style.left = e.clientX + 'px';
+  cursorDot.style.top = e.clientY + 'px';
+});
+
+document.querySelectorAll('a,button,.hero-group-chip,.nav-dot,.reptile-card,.beak-card,.diet-card,.summary-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+    cursor.style.background = 'rgba(0,212,170,0.2)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursor.style.background = 'transparent';
+  });
+});
+
+// ===== PROGRESS BAR =====
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  progressBar.style.width = scrolled + '%';
+});
+
+// ===== BUBBLES =====
+const bubblesEl = document.getElementById('bubbles');
+for (let i = 0; i < 20; i++) {
+  const b = document.createElement('div');
+  b.className = 'bubble';
+  const size = Math.random() * 80 + 20;
+  b.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${Math.random()*100}%;
+    animation-duration:${Math.random()*15+8}s;
+    animation-delay:${Math.random()*10}s;
+  `;
+  bubblesEl.appendChild(b);
+}
+
+// ===== PARTICLES =====
+const particlesEl = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `
+    left:${Math.random()*100}%;
+    animation-duration:${Math.random()*20+10}s;
+    animation-delay:${Math.random()*15}s;
+    width:${Math.random()*3+1}px;
+    height:${Math.random()*3+1}px;
+    opacity:${Math.random()*0.5};
+  `;
+  particlesEl.appendChild(p);
+}
+
+// ===== INTERSECTION OBSERVER =====
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Animate stat bars
+      if (entry.target.classList.contains('stat-row')) {
+        const bar = entry.target.querySelector('.stat-bar');
+        if (bar) {
+          setTimeout(() => {
+            bar.style.width = bar.dataset.width + '%';
+          }, 100);
+        }
+      }
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.observe-me, .info-card, .big-feature, .compare-table, .lifecycle-step, .reptile-card, .feather-card, .beak-card, .diet-card, .mammal-type-card, .importance-item, .summary-card, .timeline-item, .stat-row, .did-you-know, .fish-diagram, .section-header, .intro-text, .section-label').forEach(el => {
+  io.observe(el);
+});
+
+// ===== NAV DOTS =====
+const sections = ['section-0','section-1','section-2','section-3','section-4','section-5','section-6'];
+const navDots = document.querySelectorAll('.nav-dot');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = sections.indexOf(entry.target.id);
+      navDots.forEach((d,i) => d.classList.toggle('active', i === idx));
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+
+navDots.forEach((dot, i) => {
+  dot.addEventListener('click', () => {
+    const el = document.getElementById(sections[i]);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ===== STAGGER DELAYS for cards =====
+document.querySelectorAll('.cards-grid .info-card').forEach((card, i) => {
+  card.style.transitionDelay = (i * 0.12) + 's';
+});
+
+document.querySelectorAll('.lifecycle-step').forEach((step, i) => {
+  step.style.transitionDelay = (i * 0.15) + 's';
+});
+
+document.querySelectorAll('.summary-card').forEach((card, i) => {
+  card.style.transitionDelay = (i * 0.1) + 's';
+});
+
+// ===== HERO CHIPS CLICK =====
+document.querySelectorAll('.hero-group-chip').forEach((chip, i) => {
+  chip.addEventListener('click', () => {
+    const targets = ['section-1','section-2','section-3','section-4','section-5'];
+    const el = document.getElementById(targets[i]);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ===== CANVAS starfield =====
+const canvas = document.createElement('canvas');
+canvas.className = 'hero-canvas';
+document.querySelector('.hero').prepend(canvas);
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const stars = Array.from({length: 80}, () => ({
+  x: Math.random(), y: Math.random(),
+  r: Math.random() * 1.5 + 0.5,
+  a: Math.random(),
+  speed: Math.random() * 0.005 + 0.002
+}));
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(star => {
+    star.a += star.speed;
+    const opacity = (Math.sin(star.a) + 1) / 2 * 0.6 + 0.1;
+    ctx.beginPath();
+    ctx.arc(star.x * canvas.width, star.y * canvas.height, star.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,212,170,${opacity})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+</script>
+</body>
+</html>
