@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منوی علوم نهم | فصل‌های منتخب</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- RESET & BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: #0b0e1a;
+            color: #e8f0ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* پس‌زمینه پویا */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 170, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(123, 47, 255, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 50% 100%, rgba(255, 107, 53, 0.04) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        /* ---------- HEADER ---------- */
+        .menu-header {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .menu-badge {
+            display: inline-block;
+            background: rgba(0, 212, 170, 0.12);
+            border: 1px solid rgba(0, 212, 170, 0.35);
+            border-radius: 100px;
+            padding: 0.35rem 1.6rem;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #00d4aa;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(6px);
+        }
+
+        .menu-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, #00d4aa 45%, #7b2fff 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(0, 212, 170, 0.2);
+        }
+
+        .menu-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.6rem;
+            letter-spacing: 1px;
+        }
+
+        /* ---------- GRID ---------- */
+        .menu-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ---------- CARDS ---------- */
+        .menu-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 2rem 1.8rem 2.2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+
+        /* خط نورانی بالای کارت */
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--card-accent, #00d4aa);
+            opacity: 0.4;
+            transition: opacity 0.4s;
+            border-radius: 28px 28px 0 0;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--card-accent, rgba(255, 255, 255, 0.2));
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px var(--card-glow, rgba(0, 212, 170, 0.1));
+        }
+
+        .menu-card:hover::before {
+            opacity: 1;
+        }
+
+        /* آیکون */
+        .card-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 0 12px var(--card-glow, rgba(0, 212, 170, 0.3)));
+            transition: transform 0.4s;
+        }
+
+        .menu-card:hover .card-icon {
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+            color: #fff;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.2rem;
+            flex: 1;
+        }
+
+        .card-tag {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            color: var(--card-accent, #00d4aa);
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.25rem 0.9rem;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            align-self: flex-start;
+            transition: background 0.3s;
+        }
+
+        .menu-card:hover .card-tag {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* رنگ‌های اختصاصی هر کارت */
+        .card-geo {
+            --card-accent: #ff6a00;
+            --card-glow: rgba(255, 106, 0, 0.3);
+        }
+        .card-geo .card-title {
+            background: linear-gradient(135deg, #ffb347, #ff6a00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-space {
+            --card-accent: #06b6d4;
+            --card-glow: rgba(6, 182, 212, 0.3);
+        }
+        .card-space .card-title {
+            background: linear-gradient(135deg, #7ecfff, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-vert {
+            --card-accent: #00d4aa;
+            --card-glow: rgba(0, 212, 170, 0.3);
+        }
+        .card-vert .card-title {
+            background: linear-gradient(135deg, #a8e063, #00d4aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-all {
+            --card-accent: #7b2fff;
+            --card-glow: rgba(123, 47, 255, 0.3);
+        }
+        .card-all .card-title {
+            background: linear-gradient(135deg, #c084fc, #7b2fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ---------- FOOTER ---------- */
+        .menu-footer {
+            position: relative;
+            z-index: 1;
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 2.5rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .menu-footer strong {
+            color: rgba(0, 212, 170, 0.5);
+            font-weight: 600;
+        }
+
+        /* ---------- ANIMATION ---------- */
+        @keyframes floatIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .menu-card {
+            animation: floatIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .menu-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+        .menu-card:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+        .menu-card:nth-child(3) {
+            animation-delay: 0.25s;
+        }
+        .menu-card:nth-child(4) {
+            animation-delay: 0.35s;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 640px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .menu-card {
+                padding: 1.6rem 1.5rem 1.8rem;
+            }
+            .menu-title {
+                font-size: 2.8rem;
+            }
+            .menu-header {
+                margin-bottom: 2.5rem;
+            }
+        }
+
+        /* ---------- DECORATIVE PARTICLES ---------- */
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            background: rgba(0, 212, 170, 0.25);
+            animation: particleFloat linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* ---------- RIPPLE EFFECT ON CARD CLICK ---------- */
+        .menu-card:active {
+            transform: scale(0.97);
+            transition-duration: 0.1s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="menu-header">
+        <div class="menu-badge">🔬 علوم تجربی · پایه نهم</div>
+        <h1 class="menu-title">منوی فصل‌ها</h1>
+        <p class="menu-sub">چهار مجموعه‌ی ویژه برای مطالعه و مرور</p>
+    </header>
+
+    <!-- ===== GRID ===== -->
+    <div class="menu-grid">
+
+        <!-- کارت ۱ — زمین‌شناسی -->
+        <a href="geology-chapters.html" class="menu-card card-geo">
+            <span class="card-icon">🌍</span>
+            <h2 class="card-title">زمین‌شناسی</h2>
+            <p class="card-desc">
+                حرکت ورقه‌های سنگ‌کره، آتشفشان، زمین‌لرزه، فسیل‌ها و تاریخچه‌ی زمین — فصل‌های ۶ و ۷.
+            </p>
+            <span class="card-tag">فصل ۶ · ۷</span>
+        </a>
+
+        <!-- کارت ۲ — فضا -->
+        <a href="fasl10-negahi-be-faza.html" class="menu-card card-space">
+            <span class="card-icon">🚀</span>
+            <h2 class="card-title">نگاهی به فضا</h2>
+            <p class="card-desc">
+                کهکشان‌ها، ستارگان، سیارات، سامانه خورشیدی، صورت‌های فلکی و سفر به فضا — فصل ۱۰.
+            </p>
+            <span class="card-tag">فصل ۱۰</span>
+        </a>
+
+        <!-- کارت ۳ — مهره‌داران -->
+        <a href="chapter14-vertebrates.html" class="menu-card card-vert">
+            <span class="card-icon">🐋</span>
+            <h2 class="card-title">مهره‌داران</h2>
+            <p class="card-desc">
+                ماهی‌ها، دوزیستان، خزندگان، پرندگان و پستانداران — ساختار، ویژگی‌ها و تنوع زیستی — فصل ۱۴.
+            </p>
+            <span class="card-tag">فصل ۱۴</span>
+        </a>
+
+        <!-- کارت ۴ — زیست‌شناسی جامع -->
+        <a href="science-9th-ch11-15.html" class="menu-card card-all">
+            <span class="card-icon">🧬</span>
+            <h2 class="card-title">دنیای زنده‌ها</h2>
+            <p class="card-desc">
+                گوناگونی جانداران، گیاهان، بی‌مهرگان، مهره‌داران و بوم‌سازگان — فصل‌های ۱۱ تا ۱۵.
+            </p>
+            <span class="card-tag">فصل ۱۱ · ۱۲ · ۱۳ · ۱۴ · ۱۵</span>
+        </a>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="menu-footer">
+        <p>طراحی و توسعه · <strong>مدثر آسکانی</strong> · ۱۴۰۴</p>
+        <p style="font-size:0.7rem; margin-top:0.3rem; opacity:0.5;">کلیک روی هر کارت، شما را به آن فصل هدایت می‌کند</p>
+    </footer>
+
+    <!-- ===== PARTICLES (دکوراتیو) ===== -->
+    <script>
+        (function() {
+            const colors = ['rgba(0,212,170,0.3)', 'rgba(123,47,255,0.25)', 'rgba(255,107,53,0.2)', 'rgba(6,182,212,0.25)'];
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 6 + 2;
+                p.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    animation-duration: ${Math.random() * 18 + 12}s;
+                    animation-delay: ${Math.random() * 12}s;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                `;
+                document.body.appendChild(p);
+            }
+        })();
+    </script>
+
+</body>
+  </html>
