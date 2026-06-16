@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فصل ۱۰ - نگاهی به فضا | علوم نهم</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep-space: #010208;
+    --nebula-blue: #0a0e2a;
+    --star-white: #f0f4ff;
+    --cosmic-gold: #ffd700;
+    --nebula-purple: #6b21a8;
+    --plasma-blue: #1e40af;
+    --aurora-cyan: #06b6d4;
+    --mars-red: #dc2626;
+    --saturn-orange: #f97316;
+    --earth-green: #16a34a;
+    --glow-blue: rgba(6,182,212,0.15);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--deep-space);
+    color: var(--star-white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--aurora-cyan);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: screen;
+    transition: transform 0.1s;
+    box-shadow: 0 0 20px var(--aurora-cyan), 0 0 40px var(--aurora-cyan);
+  }
+  .cursor-trail {
+    width: 30px; height: 30px;
+    border: 1px solid rgba(6,182,212,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: 0.15s ease;
+  }
+
+  /* Stars Background */
+  #stars-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Nebula background blobs */
+  .nebula-bg {
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+    animation: nebula-drift 20s ease-in-out infinite alternate;
+  }
+  .nebula-1 { background: #4f46e5; top:-200px; right:-200px; animation-delay: 0s; }
+  .nebula-2 { background: #0891b2; bottom:-200px; left:-200px; animation-delay: -7s; }
+  .nebula-3 { background: #7c3aed; top:40%; left:40%; animation-delay: -14s; }
+
+  @keyframes nebula-drift {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(40px,40px) scale(1.1); }
+  }
+
+  /* Section styles */
+  section {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 40px;
+  }
+
+  /* ===== HERO ===== */
+  #hero {
+    align-items: center;
+    text-align: center;
+    padding: 0;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .chapter-badge {
+    display: inline-block;
+    border: 1px solid rgba(6,182,212,0.5);
+    background: rgba(6,182,212,0.08);
+    color: var(--aurora-cyan);
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+    animation: fade-in-down 1s ease both;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, #06b6d4 40%, #6b21a8 80%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fade-in-up 1.2s ease 0.2s both;
+    filter: drop-shadow(0 0 40px rgba(6,182,212,0.4));
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    color: rgba(240,244,255,0.7);
+    margin-bottom: 40px;
+    animation: fade-in-up 1.2s ease 0.4s both;
+  }
+
+  /* Orbit animation */
+  .solar-system-hero {
+    width: 320px; height: 320px;
+    margin: 0 auto 40px;
+    position: relative;
+    animation: fade-in 2s ease 0.5s both;
+  }
+
+  .sun {
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width: 60px; height: 60px;
+    background: radial-gradient(circle, #fff7aa, #ffd700, #ff8c00);
+    border-radius: 50%;
+    box-shadow: 0 0 30px #ffd700, 0 0 60px #ff8c00, 0 0 100px rgba(255,200,0,0.4);
+    animation: sun-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes sun-pulse {
+    0%,100% { box-shadow: 0 0 30px #ffd700, 0 0 60px #ff8c00, 0 0 100px rgba(255,200,0,0.4); }
+    50% { box-shadow: 0 0 50px #ffd700, 0 0 100px #ff8c00, 0 0 150px rgba(255,200,0,0.6); }
+  }
+
+  .orbit {
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+
+  .orbit-1 { width:90px; height:90px; animation: orbit-spin 4s linear infinite; }
+  .orbit-2 { width:130px; height:130px; animation: orbit-spin 7s linear infinite; }
+  .orbit-3 { width:180px; height:180px; animation: orbit-spin 12s linear infinite; }
+  .orbit-4 { width:240px; height:240px; animation: orbit-spin 20s linear infinite; }
+  .orbit-5 { width:300px; height:300px; animation: orbit-spin 35s linear infinite; }
+
+  @keyframes orbit-spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+  .planet {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 50%;
+  }
+
+  .p-mercury { width:8px; height:8px; background: radial-gradient(#b0b0b0, #808080); box-shadow: 0 0 6px #aaa; }
+  .p-venus { width:12px; height:12px; background: radial-gradient(#f5deb3, #deb887); box-shadow: 0 0 8px rgba(245,222,179,0.8); }
+  .p-earth { width:14px; height:14px; background: radial-gradient(#1a8fe3, #0a5e2a, #1a8fe3); box-shadow: 0 0 10px rgba(26,143,227,0.8); }
+  .p-mars { width:10px; height:10px; background: radial-gradient(#cd5c5c, #8b0000); box-shadow: 0 0 8px rgba(205,92,92,0.8); }
+  .p-jupiter { width:22px; height:22px; background: radial-gradient(#c8a97a, #a0785a, #c8a97a); box-shadow: 0 0 12px rgba(200,169,122,0.6); }
+
+  .hero-scroll-hint {
+    animation: bounce 2s infinite;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    margin-top: 20px;
+  }
+
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+  /* Developer credit */
+  .dev-credit {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(10,14,42,0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(6,182,212,0.2);
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: rgba(6,182,212,0.7);
+    letter-spacing: 1px;
+    pointer-events: none;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(1,2,8,0.6);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s;
+  }
+
+  .nav-logo {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--aurora-cyan);
+    letter-spacing: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(240,244,255,0.5);
+    text-decoration: none;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.3s;
+  }
+
+  .nav-links a:hover {
+    color: var(--aurora-cyan);
+    background: rgba(6,182,212,0.1);
+  }
+
+  /* ===== CONTENT SECTIONS ===== */
+  .content-section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .section-wrapper {
+    position: relative;
+    z-index: 1;
+    padding: 60px 0;
+  }
+
+  .section-number {
+    font-size: 7rem;
+    font-weight: 900;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background: linear-gradient(135deg, rgba(6,182,212,0.05), rgba(107,33,168,0.05));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -4px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--aurora-cyan);
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--aurora-cyan), #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-text {
+    background: linear-gradient(135deg, var(--cosmic-gold), #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .body-text {
+    font-size: 1rem;
+    line-height: 2;
+    color: rgba(240,244,255,0.75);
+    max-width: 700px;
+  }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: default;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--aurora-cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .card:hover {
+    background: rgba(6,182,212,0.05);
+    border-color: rgba(6,182,212,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(6,182,212,0.05);
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .card-text {
+    font-size: 0.875rem;
+    line-height: 1.8;
+    color: rgba(240,244,255,0.6);
+  }
+
+  /* ===== SCIENCE SECTION ===== */
+  #astronomy {
+    background: linear-gradient(180deg, transparent, rgba(10,14,42,0.5), transparent);
+  }
+
+  .timeline {
+    position: relative;
+    padding-right: 40px;
+    margin-top: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--aurora-cyan), var(--nebula-purple), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-right: 50px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.6s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--aurora-cyan);
+    box-shadow: 0 0 20px var(--aurora-cyan);
+    border: 3px solid var(--deep-space);
+  }
+
+  .timeline-year {
+    font-size: 0.75rem;
+    color: var(--aurora-cyan);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .timeline-content {
+    font-size: 0.9rem;
+    color: rgba(240,244,255,0.75);
+    line-height: 1.8;
+  }
+
+  .timeline-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  /* ===== GALAXY VISUAL ===== */
+  .galaxy-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin: 40px 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: radial-gradient(ellipse at center, rgba(107,33,168,0.15) 0%, transparent 70%);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  #galaxy-canvas {
+    position: absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+  }
+
+  .galaxy-label {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+  }
+
+  /* ===== PLANETS ===== */
+  #planets {
+    overflow: hidden;
+  }
+
+  .planets-showcase {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .planets-showcase { grid-template-columns: repeat(2,1fr); }
+  }
+
+  .planet-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: default;
+  }
+
+  .planet-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .planet-card:hover .planet-sphere { animation-play-state: paused; }
+
+  .planet-sphere {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    position: relative;
+    animation: float-planet 4s ease-in-out infinite;
+  }
+
+  @keyframes float-planet {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .planet-card:nth-child(2) .planet-sphere { animation-delay: -0.5s; }
+  .planet-card:nth-child(3) .planet-sphere { animation-delay: -1s; }
+  .planet-card:nth-child(4) .planet-sphere { animation-delay: -1.5s; }
+  .planet-card:nth-child(5) .planet-sphere { animation-delay: -2s; }
+  .planet-card:nth-child(6) .planet-sphere { animation-delay: -2.5s; }
+  .planet-card:nth-child(7) .planet-sphere { animation-delay: -3s; }
+  .planet-card:nth-child(8) .planet-sphere { animation-delay: -3.5s; }
+
+  .mercury-s { background: radial-gradient(circle at 35% 35%, #d4d4d4, #888, #555); box-shadow: 0 4px 20px rgba(100,100,100,0.4); }
+  .venus-s { background: radial-gradient(circle at 35% 35%, #ffe4b5, #daa520, #b8860b); box-shadow: 0 4px 20px rgba(218,165,32,0.5); }
+  .earth-s { background: radial-gradient(circle at 35% 35%, #1e90ff, #228b22, #1e90ff); box-shadow: 0 4px 20px rgba(30,144,255,0.5); }
+  .mars-s { background: radial-gradient(circle at 35% 35%, #ff6347, #cc3300, #8b0000); box-shadow: 0 4px 20px rgba(255,99,71,0.5); }
+  .jupiter-s { background: radial-gradient(circle at 35% 35%, #fad7a0, #cd853f, #8b4513); box-shadow: 0 4px 20px rgba(250,215,160,0.4); width:96px; height:96px; }
+  .saturn-s { background: radial-gradient(circle at 35% 35%, #f5deb3, #deb887, #c4a265); box-shadow: 0 4px 20px rgba(245,222,179,0.4); width:84px; height:84px; }
+  .uranus-s { background: radial-gradient(circle at 35% 35%, #4fc3f7, #0288d1, #01579b); box-shadow: 0 4px 20px rgba(79,195,247,0.5); width:72px; height:72px; }
+  .neptune-s { background: radial-gradient(circle at 35% 35%, #1565c0, #0d47a1, #1a237e); box-shadow: 0 4px 20px rgba(21,101,192,0.6); width:70px; height:70px; }
+
+  /* Saturn rings */
+  .saturn-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 120px; height: 24px;
+    transform: translate(-50%, -50%);
+    border: 4px solid rgba(245,222,179,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .planet-name-fa {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  .planet-name-en {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .planet-stat {
+    font-size: 0.7rem;
+    color: rgba(6,182,212,0.7);
+    margin-bottom: 2px;
+  }
+
+  .type-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .rocky { background: rgba(220,38,38,0.15); color: #fca5a5; border: 1px solid rgba(220,38,38,0.2); }
+  .gaseous { background: rgba(249,115,22,0.15); color: #fdba74; border: 1px solid rgba(249,115,22,0.2); }
+
+  /* Dividers */
+  .cosmic-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(6,182,212,0.3), rgba(107,33,168,0.3), transparent);
+    margin: 20px 0;
+  }
+
+  /* ===== STARS SECTION ===== */
+  .star-lifecycle {
+    display: flex;
+    gap: 0;
+    margin-top: 40px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+
+  .lifecycle-step {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    position: relative;
+  }
+
+  .lifecycle-step::after {
+    content: '←';
+    position: absolute;
+    left: 0; top: 30px;
+    color: rgba(6,182,212,0.4);
+    font-size: 1.2rem;
+    transform: translateX(-50%);
+  }
+
+  .lifecycle-step:last-child::after { display: none; }
+
+  .lifecycle-visual {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    position: relative;
+  }
+
+  .lc-nebula { background: radial-gradient(#4f46e5, #1e1b4b); box-shadow: 0 0 30px rgba(79,70,229,0.4); }
+  .lc-protostar { background: radial-gradient(#fcd34d, #f59e0b, #d97706); box-shadow: 0 0 30px rgba(252,211,77,0.4); }
+  .lc-star { background: radial-gradient(#fff, #ffd700, #ff8c00); box-shadow: 0 0 40px #ffd700, 0 0 80px rgba(255,200,0,0.3); animation: sun-pulse 2s ease-in-out infinite; }
+  .lc-giant { background: radial-gradient(#ff6b35, #d63031); box-shadow: 0 0 40px rgba(255,107,53,0.5); width:70px; height:70px; }
+  .lc-supernova { background: radial-gradient(#fff, #60a5fa, #1e40af); box-shadow: 0 0 60px rgba(255,255,255,0.6), 0 0 100px rgba(96,165,250,0.4); animation: supernova-flash 1.5s ease-in-out infinite; }
+  .lc-remnant { background: radial-gradient(#1e1b4b, #000); box-shadow: 0 0 30px rgba(99,102,241,0.4), inset 0 0 20px rgba(0,0,0,0.8); }
+
+  @keyframes supernova-flash {
+    0%,100% { box-shadow: 0 0 40px rgba(255,255,255,0.4), 0 0 80px rgba(96,165,250,0.2); transform: scale(1); }
+    50% { box-shadow: 0 0 80px rgba(255,255,255,0.8), 0 0 150px rgba(96,165,250,0.5); transform: scale(1.1); }
+  }
+
+  .lifecycle-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(240,244,255,0.8);
+    margin-bottom: 4px;
+  }
+
+  .lifecycle-desc {
+    font-size: 0.68rem;
+    color: rgba(240,244,255,0.4);
+    line-height: 1.5;
+  }
+
+  /* ===== GPS SECTION ===== */
+  .gps-visual {
+    position: relative;
+    width: 300px; height: 300px;
+    margin: 40px auto;
+  }
+
+  .gps-earth {
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #1e90ff, #228b22, #1e90ff, #006994);
+    box-shadow: 0 0 40px rgba(30,144,255,0.4);
+    z-index: 2;
+  }
+
+  .gps-sat {
+    position: absolute;
+    top:50%; left:50%;
+    width: 24px; height: 24px;
+    margin: -12px;
+    font-size: 1.2rem;
+    display: flex; align-items:center; justify-content:center;
+    filter: drop-shadow(0 0 8px rgba(6,182,212,0.8));
+  }
+
+  .sat-orbit {
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    border: 1px dashed rgba(6,182,212,0.2);
+    border-radius: 50%;
+  }
+
+  .orbit-a { width:160px; height:160px; }
+  .orbit-b { width:220px; height:220px; }
+  .orbit-c { width:280px; height:280px; }
+
+  .gps-sat-1 { animation: sat-orbit-1 6s linear infinite; }
+  .gps-sat-2 { animation: sat-orbit-2 9s linear infinite; }
+  .gps-sat-3 { animation: sat-orbit-3 12s linear infinite; }
+
+  @keyframes sat-orbit-1 {
+    from { transform: rotate(0deg) translateX(80px); }
+    to { transform: rotate(360deg) translateX(80px); }
+  }
+  @keyframes sat-orbit-2 {
+    from { transform: rotate(120deg) translateX(110px); }
+    to { transform: rotate(480deg) translateX(110px); }
+  }
+  @keyframes sat-orbit-3 {
+    from { transform: rotate(240deg) translateX(140px); }
+    to { transform: rotate(600deg) translateX(140px); }
+  }
+
+  /* Signal beams */
+  .signal-beam {
+    position: absolute;
+    top:50%; left:50%;
+    width: 2px;
+    transform-origin: top center;
+    background: linear-gradient(180deg, transparent, rgba(6,182,212,0.3));
+    animation: beam-pulse 2s ease-in-out infinite;
+    border-radius: 1px;
+  }
+
+  @keyframes beam-pulse {
+    0%,100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  /* ===== COMETS & ASTEROIDS ===== */
+  .objects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .obj-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .obj-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, var(--glow), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .obj-card:hover::after { opacity: 1; }
+  .obj-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.12); }
+
+  .obj-emoji { font-size: 3rem; margin-bottom: 14px; display: block; }
+
+  .comet-card { --glow: rgba(6,182,212,0.15); }
+  .asteroid-card { --glow: rgba(249,115,22,0.1); }
+  .meteor-card { --glow: rgba(220,38,38,0.1); }
+  .dwarf-card { --glow: rgba(107,33,168,0.15); }
+
+  /* ===== SPACE TRAVEL ===== */
+  .rocket-visual {
+    text-align: center;
+    margin: 40px 0;
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .rocket {
+    font-size: 4rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+    animation: rocket-fly 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(249,115,22,0.6));
+  }
+
+  @keyframes rocket-fly {
+    0% { bottom: -50px; opacity: 0; }
+    10% { opacity: 1; }
+    50% { bottom: 120px; }
+    90% { opacity: 1; }
+    100% { bottom: 250px; opacity: 0; }
+  }
+
+  /* Flame trail */
+  .rocket-trail {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 4px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, transparent, rgba(249,115,22,0.8), rgba(255,200,0,0.4), transparent);
+    animation: trail-fade 8s ease-in-out infinite;
+    border-radius: 2px;
+  }
+
+  @keyframes trail-fade {
+    0%,100% { height: 0; opacity: 0; }
+    20%,80% { height: 120px; opacity: 1; }
+    50% { height: 180px; }
+  }
+
+  /* ===== CONSTELLATIONS ===== */
+  .constellation-visual {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    margin: 30px 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  #constellation-canvas {
+    width: 100%; height: 100%;
+  }
+
+  /* ===== ASTRONOMER CARDS ===== */
+  .astronomer-card {
+    background: linear-gradient(135deg, rgba(107,33,168,0.1), rgba(30,64,175,0.1));
+    border: 1px solid rgba(107,33,168,0.2);
+    border-radius: 20px;
+    padding: 32px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+
+  .astronomer-card::before {
+    content: '';
+    position: absolute;
+    top:0; right:0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(107,33,168,0.2), transparent 70%);
+    border-radius: 50%;
+    transform: translate(50%,-50%);
+  }
+
+  .astronomer-card:hover {
+    border-color: rgba(107,33,168,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(107,33,168,0.15);
+  }
+
+  .astronomer-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #e9d5ff;
+  }
+
+  .astronomer-dates {
+    font-size: 0.75rem;
+    color: rgba(233,213,255,0.5);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  .astronomer-text {
+    font-size: 0.875rem;
+    line-height: 1.9;
+    color: rgba(240,244,255,0.7);
+  }
+
+  /* ===== FACT BOX ===== */
+  .fact-box {
+    background: rgba(6,182,212,0.05);
+    border: 1px solid rgba(6,182,212,0.15);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .fact-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .fact-text { font-size: 0.875rem; line-height: 1.8; color: rgba(240,244,255,0.75); }
+
+  /* ===== TABLE ===== */
+  .cosmic-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.8rem;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .cosmic-table thead th {
+    background: rgba(6,182,212,0.15);
+    color: var(--aurora-cyan);
+    padding: 12px 16px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(6,182,212,0.2);
+  }
+
+  .cosmic-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.3s;
+  }
+
+  .cosmic-table tbody tr:hover {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .cosmic-table td {
+    padding: 10px 16px;
+    text-align: center;
+    color: rgba(240,244,255,0.7);
+  }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Stagger children */
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.1s; }
+  .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.2s; }
+  .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.3s; }
+  .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.4s; }
+  .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.5s; }
+  .stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.6s; }
+  .stagger.visible > *:nth-child(7) { opacity:1; transform:none; transition-delay:0.7s; }
+  .stagger.visible > *:nth-child(8) { opacity:1; transform:none; transition-delay:0.8s; }
+
+  /* Animations */
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fade-in-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fade-in-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .planets-showcase { grid-template-columns: repeat(2,1fr); }
+    .star-lifecycle { gap: 10px; }
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    section { padding: 40px 20px; }
+    .content-section { padding: 40px 20px; }
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--aurora-cyan), var(--nebula-purple), var(--cosmic-gold));
+    z-index: 200;
+    transition: width 0.1s;
+    box-shadow: 0 0 10px var(--aurora-cyan);
+  }
+
+  /* Section accent borders */
+  .section-border-right {
+    border-right: 2px solid rgba(6,182,212,0.15);
+    padding-right: 24px;
+    margin-right: 24px;
+  }
+
+  /* Two column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media (max-width:768px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Highlight numbers */
+  .big-number {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  @media(max-width:600px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+
+  .stat-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .stat-box:hover {
+    background: rgba(6,182,212,0.05);
+    border-color: rgba(6,182,212,0.15);
+    transform: scale(1.03);
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--aurora-cyan);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: rgba(240,244,255,0.5);
+    letter-spacing: 1px;
+  }
+
+  /* ===== SECTION BG ACCENTS ===== */
+  .section-glow {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 60px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--aurora-cyan), var(--nebula-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-dev {
+    font-size: 0.8rem;
+    color: rgba(6,182,212,0.6);
+    letter-spacing: 3px;
+    margin-top: 20px;
+  }
+
+  /* Tooltip */
+  [data-tooltip] {
+    position: relative;
+  }
+  [data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10,14,42,0.95);
+    border: 1px solid rgba(6,182,212,0.2);
+    color: rgba(240,244,255,0.9);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- Nebula backgrounds -->
+<div class="nebula-bg nebula-1"></div>
+<div class="nebula-bg nebula-2"></div>
+<div class="nebula-bg nebula-3"></div>
+
+<!-- Stars Canvas -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- Navigation -->
+<nav id="mainNav">
+  <div class="nav-logo">علوم نهم · فصل ۱۰</div>
+  <ul class="nav-links">
+    <li><a href="#astronomy">نجوم</a></li>
+    <li><a href="#galaxy">کهکشان</a></li>
+    <li><a href="#stars">ستارگان</a></li>
+    <li><a href="#planets">سیارات</a></li>
+    <li><a href="#moon">قمر و ماهواره</a></li>
+    <li><a href="#others">اجرام دیگر</a></li>
+    <li><a href="#travel">سفر به فضا</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="chapter-badge">فصل دهم · علوم تجربی پایه نهم</div>
+    <h1 class="hero-title">نگاهی به فضا</h1>
+    <p class="hero-subtitle">سفری به اعماق کیهان — از ستارگان تا سامانه خورشیدی</p>
+
+    <div class="solar-system-hero">
+      <div class="orbit orbit-1"><div class="planet p-mercury"></div></div>
+      <div class="orbit orbit-2"><div class="planet p-venus"></div></div>
+      <div class="orbit orbit-3"><div class="planet p-earth"></div></div>
+      <div class="orbit orbit-4"><div class="planet p-mars"></div></div>
+      <div class="orbit orbit-5"><div class="planet p-jupiter"></div></div>
+      <div class="sun"></div>
+    </div>
+
+    <p class="hero-scroll-hint">▼ اسکرول کنید و کشف کنید ▼</p>
+  </div>
+</section>
+
+<!-- ===== INTRO ===== -->
+<div class="content-section" style="padding-top:20px;">
+  <div class="reveal">
+    <div class="section-tag">مقدمه</div>
+    <h2 class="section-title">چرا <span class="gradient-text">آسمان شب</span> اینقدر شگفت‌انگیز است؟</h2>
+    <p class="body-text">پس از غروب آفتاب، وقتی به آسمان نگاه می‌کنید، نقاط روشن باعث می‌شوند پرسش‌های زیادی در ذهن ایجاد شود. این نقاط ستاره‌اند یا سیاره؟ آیا در محل خود ثابتند؟ امروزه انسان با سفر به فضا، در پی کشف اسرار جهان هستی و حیات در سیارات فراخورشیدی است.</p>
+  </div>
+  <div class="stats-grid stagger" style="margin-top:30px;">
+    <div class="stat-box">
+      <span class="stat-value">۱۰۰+ میلیارد</span>
+      <span class="stat-label">ستاره در کهکشان ما</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-value">۸</span>
+      <span class="stat-label">سیاره در سامانه خورشیدی</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-value">۱۵۰ میلیون کیلومتر</span>
+      <span class="stat-label">فاصله زمین تا خورشید</span>
+    </div>
+  </div>
+</div>
+
+<div class="cosmic-divider" style="position:relative;z-index:1;"></div>
+
+<!-- ===== ASTRONOMY ===== -->
+<section id="astronomy" style="padding-top:40px; padding-bottom:40px;">
+  <div class="content-section">
+    <div class="section-glow" style="background:#4f46e5; top:0; right:0;"></div>
+
+    <div class="reveal">
+      <div class="section-tag">بخش اول</div>
+      <h2 class="section-title">علم <span class="gradient-text">نجوم</span></h2>
+    </div>
+
+    <div class="two-col" style="margin-top:30px;">
+      <div class="reveal-left">
+        <p class="body-text" style="margin-bottom:20px;">از هزاران سال پیش انسان به آسمان شب، ماه، خورشید و دیگر اجرام آسمانی توجه داشته است. در حدود هزار سال قبل، منجمان ایرانی و مسلمان با ساخت ابزار نجومی مانند <strong style="color:var(--aurora-cyan)">اُسطُرلاب</strong> و احداث رصدخانه، کمک زیادی به توسعه علم نجوم کردند.</p>
+        <p class="body-text">حدود ۴۰۰ سال پیش، گالیله با ساخت اولین <strong style="color:var(--aurora-cyan)">تلسکوپ</strong>، پنجره جدیدی به سوی شناخت دقیق‌تر جهان گشود.</p>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s;">
+        <div class="timeline">
+          <div class="timeline-item" id="tl1">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">~۱۰۰۰ سال پیش</div>
+            <div class="timeline-title">دوران طلایی اسلامی</div>
+            <div class="timeline-content">ساخت اسطرلاب، رصدخانه‌ها و جداول دقیق نجومی توسط منجمان ایرانی و مسلمان</div>
+          </div>
+          <div class="timeline-item" id="tl2">
+            <div class="timeline-dot" style="background:var(--cosmic-gold); box-shadow:0 0 20px var(--cosmic-gold);"></div>
+            <div class="timeline-year">قرن هفتم هجری</div>
+            <div class="timeline-title">رصدخانه مراغه</div>
+            <div class="timeline-content">خواجه نصیرالدین طوسی رصدخانه مراغه را تأسیس کرد — مرکزی علمی برای ستاره‌شناسان</div>
+          </div>
+          <div class="timeline-item" id="tl3">
+            <div class="timeline-dot" style="background:#a78bfa; box-shadow:0 0 20px #a78bfa;"></div>
+            <div class="timeline-year">~۴۰۰ سال پیش</div>
+            <div class="timeline-title">اولین تلسکوپ</div>
+            <div class="timeline-content">گالیله با ساخت تلسکوپ، دروازه‌ای نوین در نجوم علمی گشود</div>
+          </div>
+          <div class="timeline-item" id="tl4">
+            <div class="timeline-dot" style="background:var(--aurora-cyan); box-shadow:0 0 20px var(--aurora-cyan);"></div>
+            <div class="timeline-year">امروز</div>
+            <div class="timeline-title">تجهیزات مدرن</div>
+            <div class="timeline-content">تلسکوپ‌های فضایی، آنتن‌های رادیویی و کاوشگرهای بدون سرنشین</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scientist cards -->
+    <div style="margin-top:50px;">
+      <div class="section-tag">دانشمندان ایرانی</div>
+      <h3 class="section-title" style="font-size:1.8rem;">میراث علمی <span class="gold-text">ایران</span></h3>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:24px;" class="stagger">
+      <div class="astronomer-card">
+        <div class="astronomer-name">خواجه نصیرالدین طوسی</div>
+        <div class="astronomer-dates">۶۰۲ — ۶۷۸ ق</div>
+        <div class="astronomer-text">ریاضیدان، اخترشناس و فیلسوف ایرانی. پایه‌گذار رصدخانه مراغه — بزرگترین مرکز علمی قرون وسطا. ۲۳ نوشته در اخترشناسی و ۲۸ کتاب در ریاضی از خود برجای گذاشت.</div>
+      </div>
+      <div class="astronomer-card" style="background:linear-gradient(135deg, rgba(30,64,175,0.1), rgba(6,182,212,0.05));">
+        <div class="astronomer-name" style="color:#bae6fd;">ابن‌سینا</div>
+        <div class="astronomer-dates" style="color:rgba(186,230,253,0.5);">۳۵۹ — ۴۱۶ هجری شمسی</div>
+        <div class="astronomer-text">دانشمند و فیلسوف بزرگ ایرانی. در کتاب «معیار العقول» به ماشین‌های ساده و مکانیک پرداخت. بیش از ۲۷۰ اثر علمی در زمینه‌های مختلف نوشت.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALAXY ===== -->
+<section id="galaxy" style="padding:40px 0;">
+  <div class="content-section">
+    <div class="section-glow" style="background:#06b6d4; top:50%; left:0;"></div>
+    <div class="reveal">
+      <div class="section-tag">بخش دوم</div>
+      <h2 class="section-title"><span class="gradient-text">کهکشان</span></h2>
+      <p class="body-text" style="margin-bottom:30px;">کهکشان، مجموعه‌ای عظیم از <strong style="color:var(--aurora-cyan)">ستارگان، گازها، گردوغبار</strong> و فضای بین‌ستاره‌ای است که تحت تأثیر نیروی جاذبه گرانشی متقابل، در کنار هم جمع شده‌اند.</p>
+    </div>
+
+    <div class="galaxy-container reveal">
+      <canvas id="galaxy-canvas"></canvas>
+      <div class="galaxy-label">کهکشان راه شیری · تصویرسازی</div>
+    </div>
+
+    <div class="card-grid stagger" style="margin-top:30px;">
+      <div class="card">
+        <span class="card-icon">🌌</span>
+        <div class="card-title">راه شیری</div>
+        <div class="card-text">کهکشان ما — سامانه خورشیدی بخش بسیار کوچکی از آن است. برخی کهکشان‌ها با چشم غیرمسلح قابل رؤیتند.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔭</span>
+        <div class="card-title">میلیاردها کهکشان</div>
+        <div class="card-text">کیهان از میلیاردها کهکشان دیگر تشکیل شده است. کهکشان ما خود بخش بسیار کوچکی از جهان هستی است.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <div class="card-title">نیروی گرانش</div>
+        <div class="card-text">گرانش است که تمام اجزای کهکشان را در کنار یکدیگر نگه می‌دارد و از پراکنده شدن آن‌ها جلوگیری می‌کند.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STARS ===== -->
+<section id="stars" style="padding:40px 0;">
+  <div class="content-section">
+    <div class="section-glow" style="background:#ffd700; top:0; left:50%; opacity:0.04;"></div>
+    <div class="reveal">
+      <div class="section-tag">بخش سوم</div>
+      <h2 class="section-title"><span class="gold-text">ستارگان</span></h2>
+      <p class="body-text" style="margin-bottom:10px;">خورشید به عنوان تنها ستاره سامانه خورشیدی، نور و گرمای مورد نیاز ما را تأمین می‌کند. ستاره‌ها پیوسته در حال تغییرند — زمانی متولد می‌شوند و میلیاردها سال بعد می‌میرند.</p>
+    </div>
+
+    <div class="fact-box reveal">
+      <span class="fact-icon">☀️</span>
+      <div class="fact-text"><strong style="color:var(--aurora-cyan)">نزدیک‌ترین ستاره به زمین خورشید است</strong> که در فاصله حدود <strong>۱۵۰ میلیون کیلومتر</strong> قرار دارد. نور خورشید در ۸ دقیقه به زمین می‌رسد!</div>
+    </div>
+
+    <div style="margin-top:40px;">
+      <div class="section-tag" style="margin-bottom:16px;">چرخه حیات یک ستاره</div>
+      <div class="star-lifecycle reveal">
+        <div class="lifecycle-step">
+          <div class="lifecycle-visual lc-nebula">🌫️</div>
+          <div class="lifecycle-label">سحابی</div>
+          <div class="lifecycle-desc">ابر گاز و غبار</div>
+        </div>
+        <div class="lifecycle-step">
+          <div class="lifecycle-visual lc-protostar">✨</div>
+          <div class="lifecycle-label">ستاره نوزاد</div>
+          <div class="lifecycle-desc">فشرده شدن گاز</div>
+        </div>
+        <div class="lifecycle-step">
+          <div class="lifecycle-visual lc-star" style="width:60px;height:60px;font-size:1.5rem;">⭐</div>
+          <div class="lifecycle-label">ستاره اصلی</div>
+          <div class="lifecycle-desc">میلیاردها سال</div>
+        </div>
+        <div class="lifecycle-step">
+          <div class="lifecycle-visual lc-giant" style="width:70px;height:70px;font-size:1.8rem;">🔴</div>
+          <div class="lifecycle-label">غول سرخ</div>
+          <div class="lifecycle-desc">انبساط ستاره</div>
+        </div>
+        <div class="lifecycle-step">
+          <div class="lifecycle-visual lc-supernova">💥</div>
+          <div class="lifecycle-label">انفجار ابرنواختر</div>
+          <div class="lifecycle-desc">درخشش چشمگیر</div>
+        </div>
+        <div class="lifecycle-step">
+          <div class="lifecycle-visual lc-remnant">⚫</div>
+          <div class="lifecycle-label">بقایای ستاره</div>
+          <div class="lifecycle-desc">ستاره نوترونی یا سیاهچاله</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Constellations -->
+    <div style="margin-top:50px;">
+      <div class="section-tag">صورت‌های فلکی</div>
+      <h3 class="section-title" style="font-size:1.8rem; margin-bottom:12px;">نقشه <span class="gradient-text">آسمان شب</span></h3>
+      <p class="body-text" style="margin-bottom:16px;">الگوهای خیالی که انسان‌ها در طول تاریخ از ستارگان ایجاد کرده‌اند. دب اکبر (خرس بزرگ) یکی از مشهورترین صورت‌های فلکی است که با آن می‌توان <strong style="color:var(--cosmic-gold)">ستاره قطبی</strong> را پیدا کرد.</div>
+
+      <div class="constellation-visual reveal">
+        <canvas id="constellation-canvas"></canvas>
+      </div>
+
+      <div class="fact-box">
+        <span class="fact-icon">🧭</span>
+        <div class="fact-text">برای پیدا کردن ستاره قطبی، ستاره ششم و هفتم دب اکبر را به هم وصل کرده و خط را ۵ برابر فاصله بین آن دو ادامه دهید — به ستاره قطبی خواهید رسید که جهت شمال را نشان می‌دهد.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOLAR SYSTEM ===== -->
+<section id="planets" style="padding:40px 0; background:rgba(6,182,212,0.02);">
+  <div class="content-section">
+    <div class="reveal">
+      <div class="section-tag">بخش چهارم</div>
+      <h2 class="section-title">سامانه <span class="gradient-text">خورشیدی</span></h2>
+      <p class="body-text" style="margin-bottom:8px;">سامانه خورشیدی شامل <strong style="color:var(--aurora-cyan)">هشت سیاره</strong> و قریب به دویست قمر طبیعی، چند خرده‌سیاره، میلیون‌ها سیارک و اجسام سنگی دیگر است که همگی به دور خورشید در حال گردشند.</p>
+    </div>
+
+    <div class="fact-box reveal" style="margin:20px 0 30px;">
+      <span class="fact-icon">💡</span>
+      <div class="fact-text">بیشتر ستاره‌شناسان معتقدند همه اعضای سامانه خورشیدی از <strong style="color:var(--aurora-cyan)">ابر عظیم و چرخانی</strong> متشکل از گاز و غبار به نام <strong>سحابی خورشیدی</strong> تشکیل شده‌اند.</div>
+    </div>
+
+    <!-- Planets showcase -->
+    <div class="section-tag" style="margin-bottom:16px;">هشت سیاره</div>
+    <div class="planets-showcase stagger">
+
+      <!-- Mercury -->
+      <div class="planet-card" data-tooltip="نزدیک‌ترین سیاره به خورشید">
+        <div class="planet-sphere mercury-s"></div>
+        <div class="planet-name-fa">تیر (عطارد)</div>
+        <div class="planet-name-en">Mercury</div>
+        <div class="planet-stat">⏱ ۸۸ شبانه‌روز</div>
+        <div class="planet-stat">🌡 +۴۲۷°C</div>
+        <div class="planet-stat">📏 ۴۸۸۰ کیلومتر</div>
+        <span class="type-badge rocky">سنگی</span>
+      </div>
+
+      <!-- Venus -->
+      <div class="planet-card" data-tooltip="گرم‌ترین سیاره">
+        <div class="planet-sphere venus-s"></div>
+        <div class="planet-name-fa">ناهید (زهره)</div>
+        <div class="planet-name-en">Venus</div>
+        <div class="planet-stat">⏱ ۲۲۵ شبانه‌روز</div>
+        <div class="planet-stat">🌡 +۴۳۷°C</div>
+        <div class="planet-stat">📏 ۱۲۱۰۰ کیلومتر</div>
+        <span class="type-badge rocky">سنگی</span>
+      </div>
+
+      <!-- Earth -->
+      <div class="planet-card" style="border-color:rgba(22,163,74,0.2);" data-tooltip="خانه ما">
+        <div class="planet-sphere earth-s"></div>
+        <div class="planet-name-fa">زمین (ارض)</div>
+        <div class="planet-name-en">Earth</div>
+        <div class="planet-stat">⏱ ۳۶۵ شبانه‌روز</div>
+        <div class="planet-stat">🌡 +۲۷°C</div>
+        <div class="planet-stat">🌙 ۱ قمر</div>
+        <span class="type-badge rocky">سنگی</span>
+      </div>
+
+      <!-- Mars -->
+      <div class="planet-card" data-tooltip="سرخ‌کوچک">
+        <div class="planet-sphere mars-s"></div>
+        <div class="planet-name-fa">بهرام (مریخ)</div>
+        <div class="planet-name-en">Mars</div>
+        <div class="planet-stat">⏱ ۶۷۸ شبانه‌روز</div>
+        <div class="planet-stat">🌡 -۱۸°C</div>
+        <div class="planet-stat">🌙 ۲ قمر</div>
+        <span class="type-badge rocky">سنگی</span>
+      </div>
+
+      <!-- Jupiter -->
+      <div class="planet-card" data-tooltip="بزرگترین سیاره">
+        <div class="planet-sphere jupiter-s" style="margin-bottom:18px;"></div>
+        <div class="planet-name-fa">مشتری (برجیس)</div>
+        <div class="planet-name-en">Jupiter</div>
+        <div class="planet-stat">⏱ ۱۱.۸۶ سال</div>
+        <div class="planet-stat">🌙 ۷۹ قمر</div>
+        <div class="planet-stat">📏 ۱۳۷۴۰۰ کیلومتر</div>
+        <span class="type-badge gaseous">گازی</span>
+      </div>
+
+      <!-- Saturn -->
+      <div class="planet-card" data-tooltip="سیاره حلقه‌دار">
+        <div style="position:relative; width:84px; height:84px; margin:0 auto 18px;">
+          <div class="planet-sphere saturn-s" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); margin:0;"></div>
+          <div class="saturn-ring"></div>
+        </div>
+        <div class="planet-name-fa">کیوان (زحل)</div>
+        <div class="planet-name-en">Saturn</div>
+        <div class="planet-stat">⏱ ۲۹.۴۴ سال</div>
+        <div class="planet-stat">🌙 ۶۲ قمر</div>
+        <span class="type-badge gaseous">گازی</span>
+      </div>
+
+      <!-- Uranus -->
+      <div class="planet-card" data-tooltip="سیاره یخی">
+        <div class="planet-sphere uranus-s" style="margin-bottom:14px;"></div>
+        <div class="planet-name-fa">اورانوس</div>
+        <div class="planet-name-en">Uranus</div>
+        <div class="planet-stat">⏱ ۸۴ سال</div>
+        <div class="planet-stat">🌙 ۲۷ قمر</div>
+        <div class="planet-stat">🌡 -۲۱۵°C</div>
+        <span class="type-badge gaseous">گازی</span>
+      </div>
+
+      <!-- Neptune -->
+      <div class="planet-card" data-tooltip="دورترین سیاره">
+        <div class="planet-sphere neptune-s" style="margin-bottom:16px;"></div>
+        <div class="planet-name-fa">نپتون</div>
+        <div class="planet-name-en">Neptune</div>
+        <div class="planet-stat">⏱ ۱۶۴.۸ سال</div>
+        <div class="planet-stat">🌙 ۱۴ قمر</div>
+        <div class="planet-stat">🌡 -۲۱۷°C</div>
+        <span class="type-badge gaseous">گازی</span>
+      </div>
+
+    </div>
+
+    <!-- Pluto info -->
+    <div class="fact-box reveal" style="margin-top:30px; border-color:rgba(107,33,168,0.2); background:rgba(107,33,168,0.05);">
+      <span class="fact-icon">🔭</span>
+      <div class="fact-text">
+        <strong style="color:#e9d5ff;">آیا می‌دانید؟</strong> در سال ۲۰۰۶، اتحادیه بین‌المللی نجوم با رأی‌گیری، پلوتو را از رده سیاره‌های اصلی خارج کرد! اکنون پلوتو در دسته <strong>اجرام ماوراء نپتون (TNOs)</strong> قرار دارد. بزرگ‌ترین این اجرام «اریس» و دورترین آن‌ها «فارفاروت» است.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MOON & SATELLITE ===== -->
+<section id="moon" style="padding:40px 0;">
+  <div class="content-section">
+    <div class="section-glow" style="background:#818cf8; top:50%; right:0;"></div>
+    <div class="reveal">
+      <div class="section-tag">بخش پنجم</div>
+      <h2 class="section-title">قمر و <span class="gradient-text">ماهواره</span></h2>
+    </div>
+
+    <div class="two-col" style="margin-top:30px;">
+      <div class="reveal-left">
+        <p class="body-text" style="margin-bottom:16px;">به جرمی آسمانی که تحت تأثیر نیروی گرانش، به دور یک سیاره در گردش است، <strong style="color:var(--aurora-cyan)">قمر</strong> گفته می‌شود. زمین تنها دارای یک قمر است که ماه نام دارد.</p>
+        <p class="body-text" style="margin-bottom:16px;">ماه با تندی متوسط <strong style="color:var(--cosmic-gold)">یک کیلومتر در ثانیه</strong> در مدار بیضی به دور زمین می‌گردد. فاصله متوسط مدار چرخش ماه حدود <strong style="color:var(--cosmic-gold)">۳۸۰۰۰۰ کیلومتر</strong> است.</p>
+        <div class="card-grid" style="grid-template-columns:1fr; gap:12px; margin-top:0;">
+          <div class="card">
+            <span class="card-icon">📡</span>
+            <div class="card-title">ماهواره‌های مخابراتی</div>
+            <div class="card-text">امکان ارتباطات تلفنی، ارسال برنامه‌های رادیو و تلویزیون و امواج راداری</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">🌦️</span>
+            <div class="card-title">ماهواره‌های هواشناسی</div>
+            <div class="card-text">در پیش‌بینی وضعیت هوا و رصد تغییرات آب‌وهوایی به هواشناسان کمک می‌کنند</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">🗺️</span>
+            <div class="card-title">موقعیت‌یاب (GPS)</div>
+            <div class="card-text">تعیین موقعیت و مسیریابی با دقت بالا در هر نقطه از کره زمین</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:0.2s;">
+        <div style="text-align:center; margin-bottom:16px; font-size:0.8rem; color:rgba(255,255,255,0.4); letter-spacing:2px;">سامانه موقعیت‌یاب جهانی (GPS)</div>
+        <div class="gps-visual">
+          <div class="sat-orbit orbit-a"></div>
+          <div class="sat-orbit orbit-b"></div>
+          <div class="sat-orbit orbit-c"></div>
+          <div class="gps-earth">🌍</div>
+          <div class="gps-sat gps-sat-1">🛰️</div>
+          <div class="gps-sat gps-sat-2">🛰️</div>
+          <div class="gps-sat gps-sat-3">🛰️</div>
+        </div>
+        <div class="fact-box" style="margin-top:10px;">
+          <span class="fact-icon">ℹ️</span>
+          <div class="fact-text" style="font-size:0.8rem;">GPS از <strong style="color:var(--aurora-cyan)">۲۴ ماهواره</strong> تشکیل شده. هر ماهواره، مساحت محدودی از زمین را به صورت دایره‌ای پوشش می‌دهد. با اشتراک سه ماهواره، موقعیت دقیق تعیین می‌شود.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OTHER OBJECTS ===== -->
+<section id="others" style="padding:40px 0; background:rgba(249,115,22,0.02);">
+  <div class="content-section">
+    <div class="reveal">
+      <div class="section-tag">بخش ششم</div>
+      <h2 class="section-title">اجرام <span class="gold-text">دیگر</span> فضایی</h2>
+      <p class="body-text">در سامانه خورشیدی افزون بر سیاره‌ها و قمرهایشان، میلیاردها جرم فضایی دیگر وجود دارد.</p>
+    </div>
+
+    <div class="objects-grid stagger" style="margin-top:30px;">
+      <div class="obj-card comet-card">
+        <span class="obj-emoji">☄️</span>
+        <div class="card-title">دنباله‌دارها</div>
+        <div class="card-text">اجرامی از یخ، گاز منجمد و غبار که در مدارهایی بیضی‌شکل به دور خورشید می‌چرخند. هنگام نزدیک شدن به خورشید، گازهای آن‌ها تبخیر شده و دنباله درخشانی ایجاد می‌کند.</div>
+      </div>
+      <div class="obj-card asteroid-card">
+        <span class="obj-emoji">🪨</span>
+        <div class="card-title">سیارک‌ها</div>
+        <div class="card-text">اجرام سنگی کوچک که بیشتر آن‌ها در کمربند سیارکی بین مریخ و مشتری قرار دارند. از بقایای تشکیل سامانه خورشیدی هستند.</div>
+      </div>
+      <div class="obj-card meteor-card">
+        <span class="obj-emoji">🌠</span>
+        <div class="card-title">شهاب‌سنگ‌ها</div>
+        <div class="card-text">قطعات سنگی که وارد جو زمین می‌شوند. در اثر اصطکاک با هوا می‌درخشند و اغلب می‌سوزند. اگر به زمین برسند شهاب‌سنگ نامیده می‌شوند.</div>
+      </div>
+      <div class="obj-card dwarf-card">
+        <span class="obj-emoji">⚪</span>
+        <div class="card-title">خرده‌سیاره‌ها</div>
+        <div class="card-text">اجرامی مثل پلوتو، اریس، سرس و هائومیا که از نظر جرم، توانایی جذب اجرام کوچک‌تر اطراف مدار خود را ندارند.</div>
+      </div>
+    </div>
+
+    <!-- Dwarf planets table -->
+    <div class="reveal" style="margin-top:30px;">
+      <div class="section-tag" style="margin-bottom:12px;">خرده‌سیاره‌های شناخته‌شده</div>
+      <table class="cosmic-table">
+        <thead>
+          <tr>
+            <th>نام</th>
+            <th>قطر (کیلومتر)</th>
+            <th>ویژگی</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>سرس</td><td>۹۴۱</td><td>بزرگ‌ترین جرم در کمربند سیارکی</td></tr>
+          <tr><td>پلوتو</td><td>۲۳۰۶</td><td>تا ۲۰۰۶ سیاره محسوب می‌شد</td></tr>
+          <tr><td>اریس</td><td>۲۳۲۶</td><td>بزرگترین جرم ماوراء نپتون</td></tr>
+          <tr><td>هائومیا</td><td>۱۳۰۰</td><td>شکل بیضی و دوران سریع</td></tr>
+          <tr><td>ماکی‌ماکی</td><td>۱۴۴۰</td><td>سطح روشن یخی</td></tr>
+          <tr><td>فارفاروت</td><td>~۴۰۰</td><td>دورترین جرم کشف‌شده</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SPACE TRAVEL ===== -->
+<section id="travel" style="padding:40px 0;">
+  <div class="content-section">
+    <div class="section-glow" style="background:#dc2626; bottom:0; left:50%; opacity:0.05;"></div>
+    <div class="reveal">
+      <div class="section-tag">بخش هفتم</div>
+      <h2 class="section-title">سفر به <span class="gradient-text">فضا</span></h2>
+    </div>
+
+    <div class="two-col" style="margin-top:30px; align-items:start;">
+      <div class="reveal-left">
+        <p class="body-text" style="margin-bottom:16px;">بحث فضا و سفر به آن از گذشته دور مورد توجه بوده است. انسان‌ها می‌دانند که از میان سیارات سامانه خورشیدی، تنها <strong style="color:var(--mars-red)">مریخ</strong> قابلیت بررسی شرایط حیات را دارد.</p>
+        <p class="body-text" style="margin-bottom:16px;">ذهن انسان درگیر یافتن حیات در <strong style="color:var(--aurora-cyan)">سیارات فراخورشیدی</strong> است. اکنون بیش از هزار سامانه فراخورشیدی کشف شده است!</p>
+
+        <div class="card-grid" style="grid-template-columns:1fr; gap:12px; margin-top:0;">
+          <div class="card">
+            <span class="card-icon">🚀</span>
+            <div class="card-title">فضاپیماهای سرنشین‌دار</div>
+            <div class="card-text">انسان ماه‌ها در سفینه‌های فضایی به دور زمین گردش کرده و تا سطح ماه نیز پیش رفته است.</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">🤖</span>
+            <div class="card-title">کاوشگرهای بدون سرنشین</div>
+            <div class="card-text">با تجهیزات علمی و دوربین‌های پیشرفته از فضای میان‌سیاره‌ای عکس‌ها و اطلاعات بی‌نظیری ارسال کرده‌اند.</div>
+          </div>
+          <div class="card" style="border-color:rgba(220,38,38,0.2);">
+            <span class="card-icon">🔴</span>
+            <div class="card-title">کاوش مریخ</div>
+            <div class="card-text">مریخ‌نوردها اطلاعات ارزشمندی درباره سطح مریخ و احتمال وجود آب و حیات در آینده فرستاده‌اند.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:0.2s;">
+        <div class="rocket-visual">
+          <div class="rocket-trail"></div>
+          <div class="rocket">🚀</div>
+        </div>
+
+        <div class="fact-box" style="border-color:rgba(220,38,38,0.2); background:rgba(220,38,38,0.05);">
+          <span class="fact-icon">🌍</span>
+          <div class="fact-text">
+            <strong style="color:#fca5a5;">چالش‌های سفر فضایی:</strong> بی‌وزنی، تشعشعات کیهانی، فاصله‌های عظیم، نیاز به اکسیژن و آب، و زمان سفر بسیار طولانی از مهم‌ترین چالش‌هایی هستند که دانشمندان با آن‌ها دست‌وپنجه نرم می‌کنند.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUMMARY ===== -->
+<section style="padding:40px 0;">
+  <div class="content-section">
+    <div class="reveal" style="text-align:center; max-width:700px; margin:0 auto;">
+      <div class="section-tag" style="display:block; text-align:center; margin-bottom:16px;">خلاصه فصل</div>
+      <h2 class="section-title" style="text-align:center;">آنچه در این فصل <span class="gradient-text">آموختیم</span></h2>
+    </div>
+    <div class="card-grid stagger" style="margin-top:30px;">
+      <div class="card">
+        <span class="card-icon">🔭</span>
+        <div class="card-title">علم نجوم</div>
+        <div class="card-text">تاریخچه علم نجوم از اسطرلاب و رصدخانه‌های اسلامی تا تلسکوپ‌های مدرن</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌌</span>
+        <div class="card-title">کهکشان و ستارگان</div>
+        <div class="card-text">کهکشان‌ها، چرخه حیات ستارگان، صورت‌های فلکی و جهت‌یابی با ستارگان</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌍</span>
+        <div class="card-title">سامانه خورشیدی</div>
+        <div class="card-text">هشت سیاره، قمرها، ماهواره‌ها و سامانه GPS</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">☄️</span>
+        <div class="card-title">اجرام دیگر</div>
+        <div class="card-text">سیارک‌ها، دنباله‌دارها، شهاب‌سنگ‌ها و خرده‌سیاره‌ها</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚀</span>
+        <div class="card-title">سفر به فضا</div>
+        <div class="card-text">کاوش مریخ، سفینه‌های فضایی و جستجو برای حیات در کیهان</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">👨‍🔬</span>
+        <div class="card-title">دانشمندان ایرانی</div>
+        <div class="card-text">نصیرالدین طوسی، ابن‌سینا و میراث علمی درخشان ایران در نجوم</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-title">نگاهی به فضا · فصل دهم</div>
+  <p style="color:rgba(255,255,255,0.3); font-size:0.8rem; margin-bottom:12px;">علوم تجربی پایه نهم · ۱۴۰۴</p>
+  <div class="cosmic-divider" style="max-width:300px; margin:20px auto;"></div>
+  <div class="footer-dev">توسعه‌دهنده : مدثر آسکانی</div>
+  <p style="color:rgba(255,255,255,0.15); font-size:0.7rem; margin-top:8px; letter-spacing:1px;">MODASER ASKANI · DEVELOPER</p>
+</footer>
+
+<!-- Developer credit floating -->
+<div class="dev-credit">⚡ مدثر آسکانی</div>
+
+<!-- ===== دکمه بازگشت به منو ===== -->
+<a href="index.html" class="back-to-menu" title="بازگشت به منوی اصلی">
+    <span>🏠</span>
+    <span class="back-text">بازگشت به منو</span>
+</a>
+
+<style>
+    .back-to-menu {
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(1, 2, 8, 0.85);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(6, 182, 212, 0.4);
+        border-radius: 100px;
+        padding: 10px 20px 10px 16px;
+        color: #f0f4ff;
+        text-decoration: none;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(6, 182, 212, 0.08);
+        transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        cursor: pointer;
+        letter-spacing: 0.3px;
+    }
+
+    .back-to-menu:hover {
+        transform: translateY(-3px) scale(1.03);
+        border-color: #06b6d4;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.25);
+        background: rgba(6, 182, 212, 0.12);
+    }
+
+    .back-to-menu .back-text {
+        display: inline-block;
+    }
+
+    @media (max-width: 600px) {
+        .back-to-menu {
+            padding: 8px 14px 8px 10px;
+            font-size: 0.8rem;
+            bottom: 16px;
+            left: 16px;
+        }
+        .back-to-menu .back-text {
+            display: none;
+        }
+        .back-to-menu span:first-child {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+// ===== CURSOR =====
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX - 6 + 'px';
+  cursor.style.top = mouseY - 6 + 'px';
+});
+
+function animateTrail() {
+  trailX += (mouseX - trailX) * 0.15;
+  trailY += (mouseY - trailY) * 0.15;
+  trail.style.left = trailX - 15 + 'px';
+  trail.style.top = trailY - 15 + 'px';
+  requestAnimationFrame(animateTrail);
+}
+animateTrail();
+
+// ===== STARS =====
+const starsCanvas = document.getElementById('stars-canvas');
+const sCtx = starsCanvas.getContext('2d');
+let stars = [];
+
+function resizeStars() {
+  starsCanvas.width = window.innerWidth;
+  starsCanvas.height = document.body.scrollHeight;
+  createStars();
+}
+
+function createStars() {
+  stars = [];
+  const count = Math.floor((starsCanvas.width * starsCanvas.height) / 3000);
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: Math.random() * starsCanvas.width,
+      y: Math.random() * starsCanvas.height,
+      r: Math.random() * 1.5 + 0.2,
+      opacity: Math.random() * 0.8 + 0.2,
+      twinkleSpeed: Math.random() * 0.02 + 0.005,
+      twinklePhase: Math.random() * Math.PI * 2,
+      color: ['#ffffff', '#cce6ff', '#ffeecc', '#eeccff'][Math.floor(Math.random()*4)]
+    });
+  }
+}
+
+let animFrame = 0;
+function drawStars() {
+  sCtx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
+  animFrame += 0.01;
+  stars.forEach(s => {
+    const tw = Math.sin(animFrame * s.twinkleSpeed * 100 + s.twinklePhase) * 0.3 + 0.7;
+    sCtx.beginPath();
+    sCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    sCtx.fillStyle = s.color;
+    sCtx.globalAlpha = s.opacity * tw;
+    sCtx.fill();
+    // Glow for big stars
+    if (s.r > 1.2) {
+      const g = sCtx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 4);
+      g.addColorStop(0, s.color.replace(')', ', 0.3)').replace('rgb', 'rgba'));
+      g.addColorStop(1, 'transparent');
+      sCtx.beginPath();
+      sCtx.arc(s.x, s.y, s.r * 4, 0, Math.PI * 2);
+      sCtx.fillStyle = g;
+      sCtx.globalAlpha = 0.5;
+      sCtx.fill();
+    }
+    sCtx.globalAlpha = 1;
+  });
+  requestAnimationFrame(drawStars);
+}
+
+window.addEventListener('resize', resizeStars);
+resizeStars();
+drawStars();
+
+// ===== GALAXY CANVAS =====
+const galCanvas = document.getElementById('galaxy-canvas');
+const gCtx = galCanvas.getContext('2d');
+let galParticles = [];
+
+function initGalaxy() {
+  galCanvas.width = galCanvas.offsetWidth;
+  galCanvas.height = galCanvas.offsetHeight;
+  galParticles = [];
+  const N = 600;
+  for (let i = 0; i < N; i++) {
+    const arm = Math.floor(Math.random() * 3);
+    const dist = Math.pow(Math.random(), 0.5) * Math.min(galCanvas.width, galCanvas.height) * 0.45;
+    const baseAngle = (arm / 3) * Math.PI * 2;
+    const spiral = (dist / (Math.min(galCanvas.width, galCanvas.height) * 0.45)) * Math.PI * 2.5;
+    const scatter = (Math.random() - 0.5) * 0.4;
+    const angle = baseAngle + spiral + scatter;
+    const jitter = (Math.random() - 0.5) * dist * 0.1;
+    galParticles.push({
+      x: Math.cos(angle) * dist + jitter,
+      y: Math.sin(angle) * dist * 0.4 + jitter * 0.4,
+      r: Math.random() * 1.8 + 0.2,
+      opacity: Math.random() * 0.8 + 0.2,
+      hue: 180 + Math.random() * 120,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.008 + 0.002
+    });
+  }
+}
+
+let galAngle = 0;
+function drawGalaxy() {
+  if (!galCanvas.width) return;
+  gCtx.clearRect(0, 0, galCanvas.width, galCanvas.height);
+  const cx = galCanvas.width / 2, cy = galCanvas.height / 2;
+  galAngle += 0.001;
+
+  // Core glow
+  const core = gCtx.createRadialGradient(cx, cy, 0, cx, cy, 80);
+  core.addColorStop(0, 'rgba(255,240,180,0.4)');
+  core.addColorStop(0.3, 'rgba(180,120,255,0.15)');
+  core.addColorStop(1, 'transparent');
+  gCtx.fillStyle = core;
+  gCtx.fillRect(0, 0, galCanvas.width, galCanvas.height);
+
+  galParticles.forEach((p, i) => {
+    const a = galAngle * p.speed * 50 + p.phase;
+    const x = cx + Math.cos(a) * p.x - Math.sin(a) * p.y;
+    const y = cy + Math.sin(a) * p.x + Math.cos(a) * p.y;
+    const tw = Math.sin(Date.now() * 0.001 * p.speed + p.phase) * 0.2 + 0.8;
+    gCtx.beginPath();
+    gCtx.arc(x, y, p.r, 0, Math.PI * 2);
+    gCtx.fillStyle = `hsla(${p.hue}, 80%, 80%, ${p.opacity * tw})`;
+    gCtx.fill();
+  });
+  requestAnimationFrame(drawGalaxy);
+}
+
+setTimeout(() => { initGalaxy(); drawGalaxy(); }, 500);
+window.addEventListener('resize', initGalaxy);
+
+// ===== CONSTELLATION CANVAS =====
+const consCanvas = document.getElementById('constellation-canvas');
+const cCtx = consCanvas.getContext('2d');
+
+function initConst() {
+  consCanvas.width = consCanvas.offsetWidth;
+  consCanvas.height = consCanvas.offsetHeight;
+  drawConstellation();
+}
+
+// Ursa Major (Big Dipper) stars - relative positions
+const bigDipper = [
+  {x:0.15, y:0.7, name:'α'}, {x:0.22, y:0.55, name:'β'},
+  {x:0.32, y:0.45, name:'γ'}, {x:0.42, y:0.42, name:'δ'},
+  {x:0.55, y:0.35, name:'ε'}, {x:0.67, y:0.3, name:'ζ'},
+  {x:0.78, y:0.25, name:'η'}
+];
+const polaris = {x:0.85, y:0.65, name:'ستاره قطبی'};
+
+let constPhase = 0;
+function drawConstellation() {
+  if (!consCanvas.width) return;
+  cCtx.clearRect(0, 0, consCanvas.width, consCanvas.height);
+  constPhase += 0.005;
+  const W = consCanvas.width, H = consCanvas.height;
+
+  // Draw faint stars bg
+  for (let i = 0; i < 80; i++) {
+    const sx = (Math.sin(i * 137.5) * 0.5 + 0.5) * W;
+    const sy = (Math.cos(i * 97.3) * 0.5 + 0.5) * H;
+    const sr = Math.random() * 1 + 0.3;
+    cCtx.beginPath();
+    cCtx.arc(sx, sy, sr, 0, Math.PI * 2);
+    cCtx.fillStyle = 'rgba(255,255,255,0.25)';
+    cCtx.fill();
+  }
+
+  // Draw guide line to polaris (animated)
+  const s5 = bigDipper[5], s6 = bigDipper[6];
+  const dx = (polaris.x - s6.x), dy = (polaris.y - s6.y);
+  const t = (Math.sin(constPhase * 2) * 0.5 + 0.5);
+  cCtx.setLineDash([4, 6]);
+  cCtx.beginPath();
+  cCtx.moveTo(s5.x * W, s5.y * H);
+  cCtx.lineTo((s6.x + dx * t) * W, (s6.y + dy * t) * H);
+  cCtx.strokeStyle = 'rgba(6,182,212,0.5)';
+  cCtx.lineWidth = 1;
+  cCtx.stroke();
+  cCtx.setLineDash([]);
+
+  // Draw constellation lines
+  cCtx.beginPath();
+  bigDipper.forEach((s, i) => {
+    if (i === 0) cCtx.moveTo(s.x * W, s.y * H);
+    else cCtx.lineTo(s.x * W, s.y * H);
+  });
+  cCtx.strokeStyle = 'rgba(255,255,255,0.2)';
+  cCtx.lineWidth = 1;
+  cCtx.stroke();
+
+  // Draw stars
+  [...bigDipper, polaris].forEach((s, i) => {
+    const isPolar = s.name === 'ستاره قطبی';
+    const tw = Math.sin(constPhase + i) * 0.2 + 0.8;
+    const r = isPolar ? 5 : 4;
+
+    // Glow
+    const g = cCtx.createRadialGradient(s.x*W, s.y*H, 0, s.x*W, s.y*H, r*4);
+    g.addColorStop(0, isPolar ? 'rgba(6,182,212,0.6)' : 'rgba(255,255,200,0.4)');
+    g.addColorStop(1, 'transparent');
+    cCtx.fillStyle = g;
+    cCtx.beginPath();
+    cCtx.arc(s.x*W, s.y*H, r*4, 0, Math.PI*2);
+    cCtx.fill();
+
+    cCtx.beginPath();
+    cCtx.arc(s.x*W, s.y*H, r * tw, 0, Math.PI*2);
+    cCtx.fillStyle = isPolar ? '#06b6d4' : '#fffde7';
+    cCtx.fill();
+
+    // Label
+    if (isPolar) {
+      cCtx.fillStyle = 'rgba(6,182,212,0.8)';
+      cCtx.font = '11px Vazirmatn, sans-serif';
+      cCtx.fillText(s.name, s.x*W - 50, s.y*H - 12);
+    }
+  });
+
+  // Labels
+  cCtx.fillStyle = 'rgba(255,255,255,0.4)';
+  cCtx.font = '11px Vazirmatn, sans-serif';
+  cCtx.fillText('دب اکبر (خرس بزرگ)', bigDipper[3].x * W - 60, bigDipper[3].y * H + 20);
+
+  requestAnimationFrame(drawConstellation);
+}
+
+setTimeout(() => { initConst(); }, 500);
+window.addEventListener('resize', initConst);
+
+// ===== PROGRESS BAR =====
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .stagger, .timeline-item').forEach(el => {
+  observer.observe(el);
+});
+
+// ===== CANVAS RESIZE ON BODY HEIGHT CHANGE =====
+const resizeObserver = new ResizeObserver(() => {
+  starsCanvas.height = document.body.scrollHeight;
+  createStars();
+});
+resizeObserver.observe(document.body);
+
+// ===== HOVER cursor scale =====
+document.querySelectorAll('a, .card, .planet-card, .obj-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2)');
+  el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+});
+</script>
+</body>
+</html>
